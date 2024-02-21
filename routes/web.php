@@ -16,3 +16,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/product', function () {
+    return view('client.products.products');
+});
+Route::get('/detail', function () {
+    return view('client.products.detail');
+});
+Route::get('/dashboard', function () {
+    return view('admin.dashboard.index');
+});
+
+Auth::routes();
