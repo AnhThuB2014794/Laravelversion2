@@ -27,8 +27,8 @@
                         width="200px" height="200px" alt=""></td>
 
                 <td>{{ $item->name}}</td>
-                <td>{{ $item->email}}</td>
-                <td>{{ $item->phone}}</td>
+                <td>{{ $item->price}}</td>
+                <td>{{ $item->sale}}</td>
                 <td>
                     <a href="{{ route('products.edit', $item->id)}}" class="btn btn-success"><i
                             class="fa fa-edit"></i></a>

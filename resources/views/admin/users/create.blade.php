@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title', 'Create Roles')
+@section('title', 'Create Users')
 @section('content')
 <div class="card">
     <h1>Tạo người dùng</h1>

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Products\CreateProductRequest;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductDetail;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -22,7 +24,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = $this->product->lastest('id')->paginate(5);
+        $products = $this->product->latest('id')->paginate(5);
         return view('admin.products.index', compact('products'));
     }
 
@@ -38,9 +40,22 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateProductRequest $request)
     {
-        //
+        $dataCreate = $request->except('sizes');
+        $sizes = $request->sizes ? json_decode($request->sizes) : [];
+
+        $product = Product::create($dataCreate);
+        $dataCreate['image'] = $this->product->saveImage($request);
+
+        $product->images()->create(['url' => $dataCreate['image']]);
+        $product->categories()->attach($dataCreate['category_ids']);
+        $sizeArray = [];
+        foreach($sizes as $size){
+            $sizeArray[] = ['size' => $size->size, 'quantity' => $size->quantity, 'product_id' => $product];
+        }
+        ProductDetail::insert($sizeArray);
+
     }
 
     /**
