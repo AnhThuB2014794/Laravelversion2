@@ -1,13 +1,14 @@
 @extends('admin.layouts.app')
-@section('title', 'Create Product')
+@section('title', 'Edit Product')
 @section('content')
 <div class="card">
-    <h1>Create Product</h1>
+    <h1>Cập nhật sản phẩm</h1>
 
     <div>
-        <form action="{{ route('products.store') }}" method="post" id="createForm" enctype="multipart/form-data">
+        <form action="{{ route('products.update', $product->id) }}" method="post" id="createForm"
+            enctype="multipart/form-data">
             @csrf
-
+            @method('put')
             <div class="row">
                 <div class=" input-group-static col-5 mb-4">
                     <label>Image</label>
@@ -18,13 +19,14 @@
                     @enderror
                 </div>
                 <div class="col-5">
-                    <img src="" id="show-image" alt="" width="300px">
+                    <img src="{{ $product->images ? asset('upload/' . $product->images->first()->url) : 'upload/default.png' }}"
+                        id="show-image" alt="">
                 </div>
             </div>
 
             <div class="input-group input-group-static mb-4">
                 <label>Name</label>
-                <input type="text" value="{{ old('name') }}" name="name" class="form-control">
+                <input type="text" value="{{ old('name') ?? $product->name }}" name="name" class="form-control">
 
                 @error('name')
                 <span class="text-danger"> {{ $message }}</span>
@@ -33,7 +35,8 @@
 
             <div class="input-group input-group-static mb-4">
                 <label>Price</label>
-                <input type="number" step="0.1" value="{{ old('price') }}" name="price" class="form-control">
+                <input type="number" step="0.1" value="{{ old('price') ?? $product->price }}" name="price"
+                    class="form-control">
                 @error('price')
                 <span class="text-danger"> {{ $message }}</span>
                 @enderror
@@ -41,19 +44,19 @@
 
             <div class="input-group input-group-static mb-4">
                 <label>Sale</label>
-                <input type="number" value="0" value="{{ old('sale') }}" name="sale" class="form-control">
+                <input type="number" value="0" value="{{ old('sale') ?? $product->sale }}" name="sale"
+                    class="form-control">
                 @error('sale')
                 <span class="text-danger"> {{ $message }}</span>
                 @enderror
             </div>
 
-
-
             <div class="form-group">
                 <label>Description</label>
                 <div class="row w-100 h-100">
-                    <textarea name="description" id="description" class="form-control" cols="4" rows="5"
-                        style="width: 100%">{{ old('description') }} </textarea>
+                    <textarea name="description" id="description" class="form-control"
+                        style="width: 100%">{{ old('description') ?? $product->description }} </textarea>
+
                 </div>
                 @error('description')
                 <span class="text-danger"> {{ $message }}</span>
@@ -88,7 +91,9 @@
         <label name="group" class="ms-0">Category</label>
         <select name="category_ids[]" class="form-control" multiple>
             @foreach ($categories as $item)
-            <option value="{{ $item->id }}">{{ $item->name }}</option>
+            <option value="{{ $item->id }}" {{ $product->categories->contains('id', $item->id) ? 'selected' : '' }}>
+                {{ $item->name }}
+            </option>
             @endforeach
         </select>
 
@@ -117,11 +122,6 @@
     justify-content: center;
     align-items: center
 }
-
-.ck.ck-editor {
-    width: 100%;
-    height: 100%;
-}
 </style>
 @endsection
 @section('script')
@@ -131,12 +131,7 @@
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="{{ asset('plugin/ckeditor5-build-classic/ckeditor.js') }}"></script>
 <script>
-let sizes = [{
-    id: Date.now(),
-    size: 'M',
-    quantity: 1
-}];
+let sizes = @json($product - > details);
 </script>
-
 <script src="{{ asset('admin/assets/js/product/product.js') }}"></script>
 @endsection

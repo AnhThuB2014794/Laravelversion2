@@ -14,10 +14,12 @@ class ProductController extends Controller
 
     protected $category;
     protected $product;
+    protected $productDetail;
 
-    public function __construct(Product $product, Category $category){
+    public function __construct(Product $product, Category $category, ProductDetail $productDetail){
         $this->product = $product;
         $this->category = $category;
+        $this->productDetail = $productDetail;
     }
     /**
      * Display a listing of the resource.
@@ -54,7 +56,8 @@ class ProductController extends Controller
         foreach($sizes as $size){
             $sizeArray[] = ['size' => $size->size, 'quantity' => $size->quantity, 'product_id' => $product];
         }
-        ProductDetail::insert($sizeArray);
+        $this->productDetail->insert($sizeArray);
+        return redirect()->route('products.index')->with(['message' => 'Tạo sản phẩm thành công']);
 
     }
 
@@ -71,7 +74,9 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $product = $this->product->with(['details', 'categories'])->findOrFail($id);
+        $categories = $this->category->get(['id', 'name']);
+        return view('admin.products.edit', compact('categories', 'product'));
     }
 
     /**
