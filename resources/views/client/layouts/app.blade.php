@@ -3,39 +3,68 @@
 
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>@yield('title', 'Shop')</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>E-SHOP HTML Template</title>
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
 
-    <!-- Google font -->
-    <link href="https://fonts.googleapis.com/css?family=Hind:400,700" rel="stylesheet">
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
 
-    <!-- Bootstrap -->
-    <link type="text/css" rel="stylesheet" href="{{ asset('client/css/bootstrap.min.css') }}" />
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
-    <!-- Slick -->
-    <link type="text/css" rel="stylesheet" href="{{ asset('client/css/slick.css') }}" />
-    <link type="text/css" rel="stylesheet" href="{{ asset('client/css/slick-theme.css') }}" />
+    <!-- Libraries Stylesheet -->
+    <link href="{{ secure_url('client/lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
 
-    <!-- nouislider -->
-    <link type="text/css" rel="stylesheet" href="{{ asset('client/css/nouislider.min.css') }}" />
-
-    <!-- Font Awesome Icon -->
-    <link rel="stylesheet" href="{{ asset('client/css/font-awesome.min.css') }}">
-
-
-    <!-- Custom stlylesheet -->
-    <link type="text/css" rel="stylesheet" href="{{ asset('client/css/style.css') }}" />
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-		<![endif]-->
-
-    <!-- jQuery Plugins -->
-
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{{ asset('client/css/style.css') }}" rel="stylesheet">
 </head>
+
+<body>
+
+    <!-- Topbar Start -->
+    @include('client.layouts.topbar')
+    <!-- Topbar End -->
+
+
+    <!-- Navbar Start -->
+    @include('client.layouts.navbar')
+    <!-- Navbar End -->
+
+    <!-- Featured End -->
+
+
+    <!-- Categories Start -->
+
+    <!-- Categories End -->
+
+    @yield('content')
+    <!-- Subscribe Start -->
+
+
+    <!-- Vendor Start -->
+
+    <!-- Vendor End -->
+
+
+    <!-- Footer Start -->
+    @include('client.layouts.footer')
+    <!-- Footer End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    @include('client.layouts.javascript')
+</body>
+
+</html>

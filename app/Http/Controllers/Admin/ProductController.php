@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Products\CreateProductRequest;
+use App\Http\Requests\Products\UpdateProductRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductDetail;
@@ -51,12 +52,13 @@ class ProductController extends Controller
         $dataCreate['image'] = $this->product->saveImage($request);
 
         $product->images()->create(['url' => $dataCreate['image']]);
-        $product->categories()->attach($dataCreate['category_ids']);
+        $product->assignCategory($dataCreate['category_ids']);
         $sizeArray = [];
         foreach($sizes as $size){
-            $sizeArray[] = ['size' => $size->size, 'quantity' => $size->quantity, 'product_id' => $product];
+            $sizeArray[] = ['size' => $size->size, 'quantity' => $size->quantity, 'product_id' => $product->id];
         }
-        $this->productDetail->insert($sizeArray);
+        // $this->productDetail->insert($sizeArray);
+         $product->details()->insert($sizeArray);
         return redirect()->route('products.index')->with(['message' => 'Tạo sản phẩm thành công']);
 
     }
@@ -66,7 +68,9 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $product = $this->product->with(['details', 'categories'])->findOrFail($id);
+        
+        return view('admin.products.show', compact('product'));
     }
 
     /**
@@ -82,9 +86,27 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateProductRequest $request, string $id)
     {
-        //
+        $dataUpdate = $request->except('sizes');
+        $sizes = $request->sizes ? json_decode($request->sizes) : [];
+        $product = $this->product->findOrFail($id);
+        $currentImage = $product->images ? $product->images->first()->url : '';
+        $dataUpdate['image'] = $this->product->updateImage($request, $currentImage);
+
+        $product->update($dataUpdate);
+        
+
+        $product->images()->create(['url' => $dataUpdate['image']]);
+        $product->assignCategory($dataUpdate['category_ids']);
+        $sizeArray = [];
+        foreach($sizes as $size){
+            $sizeArray[] = ['size' => $size->size, 'quantity' => $size->quantity, 'product_id' => $product->id];
+        }
+        $product->details()->delete();
+        $this->productDetail->insert($sizeArray);
+         
+        return redirect()->route('products.index')->with(['message' => 'Cập nhật sản phẩm thành công']);
     }
 
     /**
@@ -92,6 +114,11 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product = $this->product->findOrFail($id);
+        $product->delete();
+        $product->details()->delete();
+        $imageName = $product->images->count() > 0 ? $product->images->first()->url : '';
+        $this->product->deleteImage($imageName);
+        return redirect()->route('products.index')->with(['message' => 'Xoá sản phẩm thành công']);
     }
 }

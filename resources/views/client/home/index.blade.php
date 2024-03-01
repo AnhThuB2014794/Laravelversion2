@@ -1,142 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- Featured Start -->
+@extends('client.layouts.app')
+@section('title', 'Home')
+@section('content')
+<div class="container-fluid pt-5">
+    <div class="row px-xl-5 pb-3">
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                <h1 class="fa fa-check text-primary m-0 mr-3"></h1>
+                <h5 class="font-weight-semi-bold m-0">Quality Product</h5>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                <h1 class="fa fa-shipping-fast text-primary m-0 mr-2"></h1>
+                <h5 class="font-weight-semi-bold m-0">Free Shipping</h5>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                <h1 class="fas fa-exchange-alt text-primary m-0 mr-3"></h1>
+                <h5 class="font-weight-semi-bold m-0">14-Day Return</h5>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                <h1 class="fa fa-phone-volume text-primary m-0 mr-3"></h1>
+                <h5 class="font-weight-semi-bold m-0">24/7 Support</h5>
+            </div>
+        </div>
+    </div>
+</div>
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title>E-SHOP HTML Template</title>
+<div class="container-fluid pt-5">
+    <div class="text-center mb-4">
+        <h2 class="section-title px-5"><span class="px-2">Products</span></h2>
+    </div>
+    <div class="row px-xl-5 pb-3">
 
-    <!-- Google font -->
-    <link href="https://fonts.googleapis.com/css?family=Hind:400,700" rel="stylesheet">
+        @foreach ($products as $item)
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="card product-item border-0 mb-4">
+                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                    <img class="img-fluid w-100"
+                        src="{{ $item->images->count() > 0 ? asset('upload/' . $item->images->first()->url) : 'upload/default.png' }}"
+                        alt="">
+                </div>
+                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                    <h6 class="text-truncate mb-3">{{ $item->name }}</h6>
+                    <div class="d-flex justify-content-center">
+                        <h6>${{ $item->price }}</h6>
+                        <h6 class="text-muted ml-2"><del>${{ $item->price }}</del></h6>
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-between bg-light border">
 
-    <!-- Bootstrap -->
-    <link type="text/css" rel="stylesheet" href="{{ asset('client/css/bootstrap.min.css') }}" />
-
-    <!-- Slick -->
-    <link type="text/css" rel="stylesheet" href="{{ asset('client/css/slick.css') }}" />
-    <link type="text/css" rel="stylesheet" href="{{ asset('client/css/slick-theme.css') }}" />
-
-    <!-- nouislider -->
-    <link type="text/css" rel="stylesheet" href="{{ asset('client/css/nouislider.min.css') }}" />
-
-    <!-- Font Awesome Icon -->
-    <link rel="stylesheet" href="{{ asset('client/css/font-awesome.min.css') }}">
-
-    <!-- Custom stlylesheet -->
-    <link type="text/css" rel="stylesheet" href="{{ asset('client/css/style.css') }}" />
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-		<![endif]-->
-
-</head>
-
-<body>
-    <!-- HEADER -->
-    <header>
-        <!-- top Header -->
-
-        @include('client.layouts.topHeader')
-        <!-- /top Header -->
-
-        <!-- header -->
-
-        @include('client.layouts.header')
-        <!-- container -->
-    </header>
-    <!-- /HEADER -->
-
-    <!-- NAVIGATION -->
-
-    @include('client.layouts.navigation')
-    <!-- /NAVIGATION -->
-
-    <!-- HOME -->
-
-    @include('client.layouts.slider')
-    <!-- /HOME -->
-
-    <!-- section -->
-
-    @include('client.layouts.collection')
-    <!-- /section -->
-
-    <!-- section -->
-
-    @include('client.layouts.deal')
-    <!-- /section -->
-
-    <!-- section -->
-    {{-- <div class="section section-grey">
-		<!-- container -->
-		<div class="container">
-			<!-- row -->
-			<div class="row">
-				<!-- banner -->
-				<div class="col-md-8">
-					<div class="banner banner-1">
-						<img src="./img/banner13.jpg" alt="">
-						<div class="banner-caption text-center">
-							<h1 class="primary-color">HOT DEAL<br><span class="white-color font-weak">Up to 50% OFF</span></h1>
-							<button class="primary-btn">Shop Now</button>
-						</div>
-					</div>
-				</div>
-				<!-- /banner -->
-
-				<!-- banner -->
-				<div class="col-md-4 col-sm-6">
-					<a class="banner banner-1" href="#">
-						<img src="./img/banner11.jpg" alt="">
-						<div class="banner-caption text-center">
-							<h2 class="white-color">NEW COLLECTION</h2>
-						</div>
-					</a>
-				</div>
-				<!-- /banner -->
-
-				<!-- banner -->
-				<div class="col-md-4 col-sm-6">
-					<a class="banner banner-1" href="#">
-						<img src="./img/banner12.jpg" alt="">
-						<div class="banner-caption text-center">
-							<h2 class="white-color">NEW COLLECTION</h2>
-						</div>
-					</a>
-				</div>
-				<!-- /banner -->
-			</div>
-			<!-- /row -->
-		</div>
-		<!-- /container -->
-	</div> --}}
-    <!-- /section -->
-
-    <!-- section -->
-
-    @include('client.layouts.product')
-    <!-- /section -->
-
-    <!-- FOOTER -->
-
-    @include('client.layouts.footer')
-    <!-- /FOOTER -->
-
-    <!-- jQuery Plugins -->
-    {{-- <script src="{{ asset('client/js/jquery.min.js') }}"></script>
-    <script src="{{ asset('client/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('client/js/slick.min.js') }}"></script>
-    <script src="{{ asset('client/js/nouislider.min.js') }}"></script>
-    <script src="{{ asset('client/js/jquery.zoom.min.js') }}"></script>
-    <script src="{{ asset('client/js/main.js') }}"></script> --}}
-    @include('client.layouts.jquery')
-
-</body>
-
-</html>
+                </div>
+            </div>
+        </div>
+        @endforeach ()
+    </div>
+</div>
+<div>
+    {{ $products->links('pagination::bootstrap-5') }}
+</div>
+@endsection

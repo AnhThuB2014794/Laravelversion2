@@ -1,147 +1,104 @@
-(function($) {
-  "use strict"
-
-  // NAVIGATION
-  var responsiveNav = $('#responsive-nav'),
-    catToggle = $('#responsive-nav .category-nav .category-header'),
-    catList = $('#responsive-nav .category-nav .category-list'),
-    menuToggle = $('#responsive-nav .menu-nav .menu-header'),
-    menuList = $('#responsive-nav .menu-nav .menu-list');
-
-  catToggle.on('click', function() {
-    menuList.removeClass('open');
-    catList.toggleClass('open');
-  });
-
-  menuToggle.on('click', function() {
-    catList.removeClass('open');
-    menuList.toggleClass('open');
-  });
-
-  $(document).click(function(event) {
-    if (!$(event.target).closest(responsiveNav).length) {
-      if (responsiveNav.hasClass('open')) {
-        responsiveNav.removeClass('open');
-        $('#navigation').removeClass('shadow');
-      } else {
-        if ($(event.target).closest('.nav-toggle > button').length) {
-          if (!menuList.hasClass('open') && !catList.hasClass('open')) {
-            menuList.addClass('open');
-          }
-          $('#navigation').addClass('shadow');
-          responsiveNav.addClass('open');
+(function ($) {
+    "use strict";
+    
+    // Dropdown on mouse hover
+    $(document).ready(function () {
+        function toggleNavbarMethod() {
+            if ($(window).width() > 992) {
+                $('.navbar .dropdown').on('mouseover', function () {
+                    $('.dropdown-toggle', this).trigger('click');
+                }).on('mouseout', function () {
+                    $('.dropdown-toggle', this).trigger('click').blur();
+                });
+            } else {
+                $('.navbar .dropdown').off('mouseover').off('mouseout');
+            }
         }
-      }
-    }
-  });
-
-  // HOME SLICK
-  $('#home-slick').slick({
-    autoplay: true,
-    infinite: true,
-    speed: 300,
-    arrows: true,
-  });
-
-  // PRODUCTS SLICK
-  $('#product-slick-1').slick({
-    slidesToShow: 3,
-    slidesToScroll: 2,
-    autoplay: true,
-    infinite: true,
-    speed: 300,
-    dots: true,
-    arrows: false,
-    appendDots: '.product-slick-dots-1',
-    responsive: [{
-        breakpoint: 991,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        }
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          dots: false,
-          arrows: true,
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        }
-      },
-    ]
-  });
-
-  $('#product-slick-2').slick({
-    slidesToShow: 3,
-    slidesToScroll: 2,
-    autoplay: true,
-    infinite: true,
-    speed: 300,
-    dots: true,
-    arrows: false,
-    appendDots: '.product-slick-dots-2',
-    responsive: [{
-        breakpoint: 991,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        }
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          dots: false,
-          arrows: true,
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        }
-      },
-    ]
-  });
-
-  // PRODUCT DETAILS SLICK
-  $('#product-main-view').slick({
-    infinite: true,
-    speed: 300,
-    dots: false,
-    arrows: true,
-    fade: true,
-    asNavFor: '#product-view',
-  });
-
-  $('#product-view').slick({
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    arrows: true,
-    centerMode: true,
-    focusOnSelect: true,
-    asNavFor: '#product-main-view',
-  });
-
-  // PRODUCT ZOOM
-  $('#product-main-view .product-view').zoom();
-
-  // PRICE SLIDER
-  var slider = document.getElementById('price-slider');
-  if (slider) {
-    noUiSlider.create(slider, {
-      start: [1, 999],
-      connect: true,
-      tooltips: [true, true],
-      format: {
-        to: function(value) {
-          return value.toFixed(2) + '$';
-        },
-        from: function(value) {
-          return value
-        }
-      },
-      range: {
-        'min': 1,
-        'max': 999
-      }
+        toggleNavbarMethod();
+        $(window).resize(toggleNavbarMethod);
     });
-  }
+    
+    
+    // Back to top button
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 100) {
+            $('.back-to-top').fadeIn('slow');
+        } else {
+            $('.back-to-top').fadeOut('slow');
+        }
+    });
+    $('.back-to-top').click(function () {
+        $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
+        return false;
+    });
 
+
+    // Vendor carousel
+    $('.vendor-carousel').owlCarousel({
+        loop: true,
+        margin: 29,
+        nav: false,
+        autoplay: true,
+        smartSpeed: 1000,
+        responsive: {
+            0:{
+                items:2
+            },
+            576:{
+                items:3
+            },
+            768:{
+                items:4
+            },
+            992:{
+                items:5
+            },
+            1200:{
+                items:6
+            }
+        }
+    });
+
+
+    // Related carousel
+    $('.related-carousel').owlCarousel({
+        loop: true,
+        margin: 29,
+        nav: false,
+        autoplay: true,
+        smartSpeed: 1000,
+        responsive: {
+            0:{
+                items:1
+            },
+            576:{
+                items:2
+            },
+            768:{
+                items:3
+            },
+            992:{
+                items:4
+            }
+        }
+    });
+
+
+    // Product Quantity
+    $('.quantity button').on('click', function () {
+        var button = $(this);
+        var oldValue = button.parent().parent().find('input').val();
+        if (button.hasClass('btn-plus')) {
+            var newVal = parseFloat(oldValue) + 1;
+        } else {
+            if (oldValue > 0) {
+                var newVal = parseFloat(oldValue) - 1;
+            } else {
+                newVal = 0;
+            }
+        }
+        button.parent().parent().find('input').val(newVal);
+    });
+    
 })(jQuery);
+

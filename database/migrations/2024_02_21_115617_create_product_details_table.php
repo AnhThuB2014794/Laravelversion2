@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             
             $table->string('size');
-            $table->string('string');
+        
             $table->smallInteger('quantity');
             $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete();
             $table->timestamps();

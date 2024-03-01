@@ -2,7 +2,7 @@
 @section('title', 'Create Product')
 @section('content')
 <div class="card">
-    <h1>Create Product</h1>
+    <h1>Tạo mới sản phẩm</h1>
 
     <div>
         <form action="{{ route('products.store') }}" method="post" id="createForm" enctype="multipart/form-data">
@@ -10,7 +10,7 @@
 
             <div class="row">
                 <div class=" input-group-static col-5 mb-4">
-                    <label>Image</label>
+                    <label>Ảnh</label>
                     <input type="file" accept="image/*" name="image" id="image-input" class="form-control">
 
                     @error('image')
@@ -23,7 +23,7 @@
             </div>
 
             <div class="input-group input-group-static mb-4">
-                <label>Name</label>
+                <label>Tên sản phẩm</label>
                 <input type="text" value="{{ old('name') }}" name="name" class="form-control">
 
                 @error('name')
@@ -32,7 +32,7 @@
             </div>
 
             <div class="input-group input-group-static mb-4">
-                <label>Price</label>
+                <label>Giá</label>
                 <input type="number" step="0.1" value="{{ old('price') }}" name="price" class="form-control">
                 @error('price')
                 <span class="text-danger"> {{ $message }}</span>
@@ -40,7 +40,7 @@
             </div>
 
             <div class="input-group input-group-static mb-4">
-                <label>Sale</label>
+                <label>Giảm giá</label>
                 <input type="number" value="0" value="{{ old('sale') }}" name="sale" class="form-control">
                 @error('sale')
                 <span class="text-danger"> {{ $message }}</span>
@@ -50,7 +50,7 @@
 
 
             <div class="form-group">
-                <label>Description</label>
+                <label>Mô tả</label>
                 <div class="row w-100 h-100">
                     <textarea name="description" id="description" class="form-control" cols="4" rows="5"
                         style="width: 100%">{{ old('description') }} </textarea>
@@ -62,7 +62,7 @@
             <input type="hidden" id="inputSize" name='sizes'>
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddSizeModal">
-                Add size
+                Thêm size
             </button>
 
             <!-- Modal -->
@@ -71,21 +71,22 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="AddSizeModalLabel">Add size</h5>
+                            <h5 class="modal-title" id="AddSizeModalLabel">Thêm size</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body" id="AddSizeModalBody">
 
                         </div>
                         <div class="mt-3">
-                            <button type="button" class="btn  btn-primary btn-add-size">Add</button>
+                            <button type="button" class="btn  btn-primary btn-add-size">Thêm</button>
                         </div>
                     </div>
                 </div>
             </div>
+
     </div>
     <div class="input-group input-group-static mb-4">
-        <label name="group" class="ms-0">Category</label>
+        <label name="group" class="ms-0">Danh mục</label>
         <select name="category_ids[]" class="form-control" multiple>
             @foreach ($categories as $item)
             <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -97,35 +98,12 @@
         @enderror
     </div>
 
-    <button type="submit" class="btn btn-submit btn-primary">Submit</button>
+    <button type="submit" class="btn btn-submit btn-primary">Lưu lại</button>
     </form>
 </div>
 </div>
 @endsection
-
-@section('style')
-<style>
-.w-40 {
-    width: 40%;
-}
-
-.w-20 {
-    width: 20%;
-}
-
-.row {
-    justify-content: center;
-    align-items: center
-}
-
-.ck.ck-editor {
-    width: 100%;
-    height: 100%;
-}
-</style>
-@endsection
 @section('script')
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"
     integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -133,10 +111,9 @@
 <script>
 let sizes = [{
     id: Date.now(),
-    size: 'M',
-    quantity: 1
-}];
+    size: "M",
+    quantity: 1,
+}]
 </script>
-
-<script src="{{ asset('admin/assets/js/product/product.js') }}"></script>
+<script src="{{ asset('admin/assets/js/product/product.js')}}"></script>
 @endsection

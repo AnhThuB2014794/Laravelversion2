@@ -32,6 +32,7 @@
                 <td>
                     <a href="{{ route('products.edit', $item->id)}}" class="btn btn-success"><i
                             class="fa fa-edit"></i></a>
+                    <a href="{{ route('products.show', $item->id)}}" class="btn btn-info"><i class="fa fa-eye"></i></a>
 
                     <form action="{{ route('products.destroy', $item->id) }}" id="form-delete{{ $item->id}}"
                         method="post">
