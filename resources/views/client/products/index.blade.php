@@ -192,7 +192,7 @@
 
 
                 <div class="col-12 pb-1">
-                    {{ $products->links() }}
+                    {{ $products->links('pagination::bootstrap-5') }}
 
                 </div>
             </div>

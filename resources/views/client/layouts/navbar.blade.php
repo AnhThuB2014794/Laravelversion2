@@ -45,8 +45,17 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    <div class="navbar-nav mr-auto py-0">
+                        <a href="{{ route('client.home') }}" class="nav-item nav-link active">Home</a>
+
+
+
+
+                    </div>
+
 
                     <div class="navbar-nav ml-auto py-0">
+
                         @if (auth()->check())
                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">

@@ -16,7 +16,7 @@
 
 <!-- Shop Detail Start -->
 <div class="container-fluid py-5">
-    <form action="{{ route('client.carts.add') }}" method="POST" class="row px-xl-5">
+    <form action="{{ route('client.carts.add')}}" method="POST" class="row px-xl-5">
         @csrf
         <input type="hidden" name="product_id" value="{{ $product->id }}">
         <div class="col-lg-5 pb-5">
@@ -118,7 +118,7 @@
                         <div class="col-md-6">
                             <h4 class="mb-4">1 review for {{ $product->name }}</h4>
                             <div class="media mb-4">
-                                <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+
                                 <div class="media-body">
                                     <h6>John Doe<small> - <i>01 Jan 2045</i></small></h6>
                                     <div class="text-primary mb-2">
