@@ -65,14 +65,14 @@
                 <span class="text-danger">{{$message}}</span>
                 @enderror
             </div>
-            <div class="input-group input-group-static mb-4">
+            <!-- <div class="input-group input-group-static mb-4">
                 <label for="">Mật khẩu</label>
                 <input type="password" name="password" class="form-control">
 
                 @error('password')
                 <span class="text-danger">{{$message}}</span>
                 @enderror
-            </div>
+            </div> -->
 
 
 

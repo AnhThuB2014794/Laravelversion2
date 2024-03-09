@@ -56,8 +56,8 @@
             <div class="container-fluid py-1 px-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-                        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a>
-                        </li>
+                        <!-- <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a>
+                        </li> -->
                         <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Dashboard</li>
                     </ol>
                     {{-- <h6 class="font-weight-bolder mb-0">Dashboard</h6> --}}
@@ -72,13 +72,13 @@
                         <ul class="navbar-nav  justify-content-end">
                             <li class="nav-item d-flex align-items-center ">
 
-                                <a class="dropdown-item" href="" aria-labelledby="navbarDropdown" onclick="event.preventDefault();
+                                <a class="dropdown-item" href="auth.login" aria-labelledby="navbarDropdown" onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
                                 {{-- {{ route('logout') }} --}}
 
-                                <form id="logout-form" action="" method="POST" class="d-none">
+                                <form id="logout-form" action="{{route('logout')}}" method="POST" class="d-none">
                                     @csrf
                                 </form>
                                 {{-- {{ route('logout') }} --}}
@@ -195,7 +195,7 @@
                             <div class="col-lg-6">
                                 <ul class="nav nav-footer justify-content-center justify-content-lg-end">
 
-                                    <li class="nav-item">
+                                    <!-- <li class="nav-item">
                                         <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted"
                                             target="_blank">About Us</a>
                                     </li>
@@ -206,7 +206,7 @@
                                     <li class="nav-item">
                                         <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted"
                                             target="_blank">License</a>
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </div>
                         </div>
@@ -284,32 +284,18 @@
                     </div>
                 </div>
                 <hr class="horizontal dark my-sm-4">
-                <a class="btn btn-outline-dark w-100" href="">View documentation</a>
-                <div class="w-100 text-center">
-                    <a class="github-button" href="https://github.com/creativetimofficial/material-dashboard"
-                        data-icon="octicon-star" data-size="large" data-show-count="true"
-                        aria-label="Star creativetimofficial/material-dashboard on GitHub">Star</a>
-                    <h6 class="mt-3">Thank you for sharing!</h6>
-                    <a href="https://twitter.com/intent/tweet?text=Check%20Material%20UI%20Dashboard%20made%20by%20%40CreativeTim%20%23webdesign%20%23dashboard%20%23bootstrap5&amp;url=https%3A%2F%2Fwww.creative-tim.com%2Fproduct%2Fsoft-ui-dashboard"
-                        class="btn btn-dark mb-0 me-2" target="_blank">
-                        <i class="fab fa-twitter me-1" aria-hidden="true"></i> Tweet
-                    </a>
-                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.creative-tim.com/product/material-dashboard"
-                        class="btn btn-dark mb-0 me-2" target="_blank">
-                        <i class="fab fa-facebook-square me-1" aria-hidden="true"></i> Share
-                    </a>
-                </div>
+
             </div>
         </div>
     </div>
     <!--   Core JS Files   -->
-    <script src="{{asset('admin/assets/js/core/popper.min.js')}}"></script>
+    <!-- <script src="{{asset('admin/assets/js/core/popper.min.js')}}"></script>
     <script src="{{asset('admin/assets/js/core/bootstrap.min.js')}}"></script>
     <script src="{{asset('admin/assets/js/plugins/perfect-scrollbar.min.js')}}"></script>
     <script src="{{asset('admin/assets/js/plugins/smooth-scrollbar.min.js')}}"></script>
-    <script src="{{asset('admin/assets/js/plugins/chartjs.min.js')}}"></script>
+    <script src="{{asset('admin/assets/js/plugins/chartjs.min.js')}}"></script> -->
 
-    <script>
+    <!-- <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
         var options = {
@@ -317,35 +303,36 @@
         }
         Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
-    </script>
+    </script> -->
     <!-- Github buttons -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- <script async defer src="https://buttons.github.io/buttons.js"></script> -->
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="{{asset('admin/assets/js/material-dashboard.min.js?v=3.0.2')}}"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.js"
-        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <!-- <script src="{{asset('admin/assets/js/material-dashboard.min.js?v=3.0.2')}}"></script> -->
+
     {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="" crossorigin="anonymous"></script> --}}
     {{-- <script src="//cdb.jsdelivr.net/npm/sweetalert2@11"></script> --}}
     {{-- <script src="{{ asset('admin/assets/base/base.js')}}"></script> --}}
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"
         integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
 
 
-    <script src="{{ asset('admin/assets/base/base.js') }}"></script>
-    <script>
+
+    <!-- <script>
     let sizes = [{
         id: Date.now(),
         size: 'M',
         quantity: 1
     }];
-    </script>
-
+    </script> -->
+    <!-- <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('admin/assets/js/product/product.js') }}"></script>
-
-
+    <script src="{{ asset('admin/assets/base/base.js') }}"></script> -->
+    @include('admin.layouts.javascript')
     @yield('scripts')
 </body>
 

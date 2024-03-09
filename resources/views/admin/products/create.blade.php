@@ -59,14 +59,14 @@
                 <span class="text-danger"> {{ $message }}</span>
                 @enderror
             </div>
-            <input type="hidden" id="inputSize" name='sizes'>
+            <!-- <input type="hidden" id="inputSize" name='sizes'> -->
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddSizeModal">
+            <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddSizeModal">
                 Thêm size
-            </button>
+            </button> -->
 
             <!-- Modal -->
-            <div class="modal fade" id="AddSizeModal" tabindex="-1" aria-labelledby="AddSizeModalLabel"
+            <!-- <div class="modal fade" id="AddSizeModal" tabindex="-1" aria-labelledby="AddSizeModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -82,6 +82,17 @@
                         </div>
                     </div>
                 </div>
+            </div> -->
+            <div class="form-group">
+                <label for="sizes">Sizes</label>
+                <input id="sizes" type="text" class="form-control" name="sizes"
+                    placeholder="Vui lòng nhập size (VD: S,M,L,...)" required>
+            </div>
+
+            <div class="form-group">
+                <label for="quantities">Quantities</label>
+                <input id="quantities" type="text" class="form-control" name="quantities"
+                    placeholder="Vui lòng nhập số lượng sản phẩm tương ứng với các size (VD: 10,20,30,...)" required>
             </div>
 
     </div>
@@ -109,11 +120,7 @@
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="{{ asset('plugin/ckeditor5-build-classic/ckeditor.js') }}"></script>
 <script>
-let sizes = [{
-    id: Date.now(),
-    size: "M",
-    quantity: 1,
-}]
+
 </script>
-<script src="{{ asset('admin/assets/js/product/product.js')}}"></script>
+<script src="{{ asset('admin/assets/js/product/product.js') }}"></script>
 @endsection

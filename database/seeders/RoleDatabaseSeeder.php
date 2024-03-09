@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Permisson;
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -26,6 +27,15 @@ class RoleDatabaseSeeder extends Seeder
         foreach($roles as $role){
             Role::updateOrCreate($role);
         }
+
+        $superAdmin = User::whereEmail('admin@gmail.com')->first();
+
+        if(!$superAdmin)
+        {
+            $superAdmin = User::factory()->create(['email' => 'admin@gmail.com']);
+        }
+        $superAdmin->assignRole('super-admin');
+
 
         $permissions = [
             ['name' => 'create-user', 'display_name' => 'Tạo mới người dùng', 'group' => 'Người dùng'],
@@ -52,6 +62,10 @@ class RoleDatabaseSeeder extends Seeder
             ['name' => 'update-coupon', 'display_name' => 'Cập nhật phiếu giảm giá', 'group' => 'Phiếu giảm giá'],
             ['name' => 'show-coupon', 'display_name' => 'Hiển thị phiếu giảm giá', 'group' => 'Phiếu giảm giá'],
             ['name' => 'delete-coupon', 'display_name' => 'Xóa phiếu giảm giá', 'group' => 'Phiếu giảm giá'],
+
+            ['name' => 'list-order', 'display_name' => 'Danh sách đơn hàng', 'group' => 'Đơn hàng'],
+            ['name' => 'update-order-status', 'display_name' => 'Cập nhật trạng thái đơn hàng', 'group' => 'Đơn hàng'],
+
 
         ];
         foreach($permissions as $item){

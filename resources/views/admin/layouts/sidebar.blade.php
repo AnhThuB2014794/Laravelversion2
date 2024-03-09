@@ -6,8 +6,8 @@
             aria-hidden="true" id="iconSidenav"></i>
         <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard "
             target="_blank">
-            <img src="../assets/img/logo-ct.png" class="navbar-brand-img h-100" alt="main_logo">
-            <span class="ms-1 font-weight-bold text-white">My-Shop</span>
+            <img src="admin/assets/img/icons/logo.jpg" class="navbar-brand-img h-100" alt="main_logo">
+            <span class="ms-1 font-weight-bold text-white">Hello: {{auth()->user()->name}}</span>
         </a>
     </div>
     <hr class="horizontal light mt-0 mb-2">
@@ -22,6 +22,7 @@
                     <span class="nav-link-text ms-1">Thống Kê</span>
                 </a>
             </li>
+            @hasrole('super-admin')
             <li class="nav-item">
                 <a class="nav-link text-white {{ request()->routeIs('roles.*') ? 'bg-gradient-primary active' :'' }} "
                     href="{{route('roles.index')}}">
@@ -31,6 +32,8 @@
                     <span class="nav-link-text ms-1">Vai Trò</span>
                 </a>
             </li>
+            @endhasrole
+            @can('show-user')
             <li class="nav-item">
                 <a class="nav-link text-white {{ request()->routeIs('users.*') ? 'bg-gradient-primary active' :'' }} "
                     href="{{route('users.index')}}">
@@ -40,6 +43,8 @@
                     <span class="nav-link-text ms-1">Người Dùng</span>
                 </a>
             </li>
+            @endcan
+            @can('show-product')
             <li class="nav-item">
                 <a class="nav-link text-white {{ request()->routeIs('products.*') ? 'bg-gradient-primary active' :'' }}"
                     href="{{route('products.index')}}">
@@ -49,6 +54,9 @@
                     <span class="nav-link-text ms-1">Sản Phẩm</span>
                 </a>
             </li>
+            @endcan
+
+            @can('show-category')
             <li class="nav-item">
                 <a class="nav-link text-white {{ request()->routeIs('categories.*') ? 'bg-gradient-primary active' :'' }} "
                     href="{{route('categories.index')}}">
@@ -58,6 +66,9 @@
                     <span class="nav-link-text ms-1">Danh mục</span>
                 </a>
             </li>
+            @endcan
+
+            @can('show-coupon')
             <li class="nav-item">
                 <a class="nav-link text-white {{ request()->routeIs('coupons.*') ? 'bg-gradient-primary active' :'' }} "
                     href="{{route('coupons.index')}}">
@@ -67,6 +78,19 @@
                     <span class="nav-link-text ms-1">Mã giảm giá</span>
                 </a>
             </li>
+            @endcan
+
+            <li class="nav-item">
+                <a class="nav-link text-white {{ request()->routeIs('admin.orders.*') ? 'bg-gradient-primary active' :'' }} "
+                    href="{{route('admin.orders.index')}}">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">format_textdirection_r_to_l</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Đơn hàng</span>
+                </a>
+            </li>
+
+
         </ul>
     </div>
 </aside>

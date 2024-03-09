@@ -24,16 +24,21 @@
                 <td>{{ $item->name}}</td>
                 <td>{{ $item->parent_name}}</td>
                 <td>
+                    @can('update-category')
                     <a href="{{ route('categories.edit', $item->id)}}" class="btn btn-success"><i
                             class="fa fa-edit"></i></a>
+                    @endcan
 
+                    @can('delete-category')
                     <form action="{{ route('categories.destroy', $item->id) }}" id="form-delete{{ $item->id}}"
                         method="post">
                         @csrf
                         @method('delete')
-                        <button class="btn btn-delete btn-danger" type="submit" data-id={{ $item->id }}><i
-                                class="fa fa-trash"></i></button>
+
                     </form>
+                    <button class="btn btn-delete btn-danger" type="submit" data-id={{ $item->id }}><i
+                            class="fa fa-trash"></i></button>
+                    @endcan
                 </td>
             </tr>
             @endforeach
@@ -43,7 +48,7 @@
 </div>
 @endsection
 
-<!-- @section('script')
+@section('script')
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
     crossorigin="anonymous">
 </script>
@@ -84,4 +89,4 @@ $(() => {
 
 )
 </script>
-@endsection -->
+@endsection

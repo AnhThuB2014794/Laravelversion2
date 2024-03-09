@@ -67,12 +67,12 @@
             </div>
             <input type="hidden" id="inputSize" name='sizes'>
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddSizeModal">
+            <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddSizeModal">
                 Thêm size
-            </button>
+            </button> -->
 
             <!-- Modal -->
-            <div class="modal fade" id="AddSizeModal" tabindex="-1" aria-labelledby="AddSizeModalLabel"
+            <!-- <div class="modal fade" id="AddSizeModal" tabindex="-1" aria-labelledby="AddSizeModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -88,6 +88,17 @@
                         </div>
                     </div>
                 </div>
+            </div> -->
+            <div class="form-group">
+                <label for="sizes">Sizes</label>
+                <input id="sizes" type="text" class="form-control" name="sizes" value="{{ implode(',', $sizes) }}"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="quantities">Quantities</label>
+                <input id="quantities" type="text" class="form-control" name="quantities"
+                    value="{{ implode(',', $quantities) }}" required>
             </div>
 
     </div>

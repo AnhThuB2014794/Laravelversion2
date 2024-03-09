@@ -45,23 +45,78 @@ class ProductController extends Controller
      */
     public function store(CreateProductRequest $request)
     {
-        $dataCreate = $request->except('sizes');
-        $sizes = $request->sizes ? json_decode($request->sizes) : [];
+        $dataCreate = $request->all();
+        // $product = Product::create($dataCreate);
 
         $product = Product::create($dataCreate);
         $dataCreate['image'] = $this->product->saveImage($request);
 
         $product->images()->create(['url' => $dataCreate['image']]);
-        $product->assignCategory($dataCreate['category_ids']);
-        $sizeArray = [];
-        foreach($sizes as $size){
-            $sizeArray[] = ['size' => $size->size, 'quantity' => $size->quantity, 'product_id' => $product->id];
+        
+        // $sizeArray = [];
+        // foreach($sizes as $size){
+        //     $sizeArray[] = ['size' => $size->size, 'quantity' => $size->quantity, 'product_id' => $product->id];
+        //     // $sizeArray[] = ['size' => $size[size], 'quantity' => $size[quantity], 'product_id' => $product->id];
+        // }
+        // // $this->productDetail->insert($sizeArray);
+        //  $product->details()->insert($sizeArray);
+         $validatedData = $request->validate([
+            
+           
+            'sizes' => 'required|string',
+            'quantities' => 'required|string',
+            
+        ]);
+
+        // Process sizes and quantities
+        $sizes = explode(',', $validatedData['sizes']);
+        $quantities = explode(',', $validatedData['quantities']);
+
+        // Create product details for each size and quantity
+        foreach ($sizes as $key => $size) {
+            $product->details()->create([
+                'size' => trim($size),
+                'quantity' => trim($quantities[$key]),
+            ]);
         }
-        // $this->productDetail->insert($sizeArray);
-         $product->details()->insert($sizeArray);
+        $product->assignCategory($dataCreate['category_ids']);
         return redirect()->route('products.index')->with(['message' => 'Tạo sản phẩm thành công']);
 
     }
+    // public function store(Request $request)
+    // {
+    //     $dataCreate = $request->all();
+    //     $product = Product::create($dataCreate);
+    //     $dataCreate['image'] = $this->product->saveImage($request);
+    //     $product->images()->create(['url' => $dataCreate['image']]);
+    //     // Validate the form data
+    //     $validatedData = $request->validate([
+            
+           
+    //         'sizes' => 'required|string',
+    //         'quantities' => 'required|string',
+            
+    //     ]);
+
+    //     // Create the product
+        
+
+    //     // Process sizes and quantities
+    //     $sizes = explode(',', $validatedData['sizes']);
+    //     $quantities = explode(',', $validatedData['quantities']);
+
+    //     // Create product details for each size and quantity
+    //     foreach ($sizes as $key => $size) {
+    //         $product->details()->create([
+    //             'size' => trim($size),
+    //             'quantity' => trim($quantities[$key]),
+    //         ]);
+    //     }
+    //     $product->assignCategory($dataCreate['category_ids']);
+
+    //     return redirect()->route('products.index')->with('success','Thêm sản phẩm thành công');
+    // }
+
 
     /**
      * Display the specified resource.
@@ -80,7 +135,9 @@ class ProductController extends Controller
     {
         $product = $this->product->with(['details', 'categories'])->findOrFail($id);
         $categories = $this->category->get(['id', 'name']);
-        return view('admin.products.edit', compact('categories', 'product'));
+         $sizes = $product->details->pluck('size')->toArray();
+        $quantities = $product->details->pluck('quantity')->toArray();
+        return view('admin.products.edit', compact('categories', 'product','sizes', 'quantities'));
     }
 
     /**
@@ -89,23 +146,26 @@ class ProductController extends Controller
     public function update(UpdateProductRequest $request, string $id)
     {
         $dataUpdate = $request->except('sizes');
-        $sizes = $request->sizes ? json_decode($request->sizes) : [];
+         $validatedData = $request->validate([
+            'sizes' => 'required|string',
+            'quantities' => 'required|string',
+        ]);
         $product = $this->product->findOrFail($id);
         $currentImage = $product->images ? $product->images->first()->url : '';
         $dataUpdate['image'] = $this->product->updateImage($request, $currentImage);
-
-        $product->update($dataUpdate);
-        
-
         $product->images()->create(['url' => $dataUpdate['image']]);
+        $product->update($dataUpdate);
+
         $product->assignCategory($dataUpdate['category_ids']);
-        $sizeArray = [];
-        foreach($sizes as $size){
-            $sizeArray[] = ['size' => $size->size, 'quantity' => $size->quantity, 'product_id' => $product->id];
-        }
+        $sizes = explode(',', $validatedData['sizes']);
+        $quantities = explode(',', $validatedData['quantities']);
         $product->details()->delete();
-        $this->productDetail->insert($sizeArray);
-         
+        foreach ($sizes as $key => $size) {
+            $product->details()->create([
+                'size' => trim($size),
+                'quantity' => trim($quantities[$key]),
+            ]);
+        }
         return redirect()->route('products.index')->with(['message' => 'Cập nhật sản phẩm thành công']);
     }
 

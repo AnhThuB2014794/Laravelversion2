@@ -51,7 +51,8 @@ $(() => {
     function addSize() {
         let size = {
             id: Date.now(),
-            size: "30",
+            size: "L",
+            quantity: 1,
         };
         sizes = [...sizes, size];
         renderSize(size);
@@ -90,7 +91,7 @@ $(() => {
                                             <label>Size</label>
                                             <input value="${size.size}" type="text" class="form-control input-size" data-id="${size.id}">
                                         </div>
-        
+
                                         <div class="input-group input-group-static col-5 w-40">
                                             <label>Quantity</label>
                                             <input type="number" value="${size.quantity}" class="form-control input-quantity" data-id="${size.id}">

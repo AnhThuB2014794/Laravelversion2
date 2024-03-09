@@ -19,4 +19,16 @@ class Coupon extends Model
     public function getExperyDateAttribute(){
         return Carbon::parse($this->attributes['expery_date'])->format('Y-m-d');
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'coupon_user');
+    }
+
+    public function firstWithExperyDate($name, $userId)
+    {
+        return $this->whereName($name)->whereDoesntHave('users', fn($q) => $q->where('users.id', $userId))
+        ->whereDate('expery_date', '>=', Carbon::now())->first();
+    }
+
 }

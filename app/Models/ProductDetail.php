@@ -11,7 +11,11 @@ class ProductDetail extends Model
     protected $fillable = [
         'size',
         'product_id',
-        'color',
         'quantity'
     ];
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
 }
