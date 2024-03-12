@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\ProductController as ClientProductController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\Admin\WarehouseController;
 use App\Http\Controllers\PaymentController;
 use App\Models\Category;
 use App\Models\Product;
@@ -62,7 +63,7 @@ Route::middleware('auth')->group(function () {
 //     return view('client.layouts.app');
 // });
 
-
+Auth::routes();
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -71,7 +72,7 @@ Route::middleware('auth')->group(function () {
     // Route::resource('categories', CategoryController::class);
     // Route::resource('products', ProductController::class);
     // Route::resource('coupons', CounponController::class);
-
+  
     Route::prefix('roles')->controller(RoleController::class)->name('roles.')->group(function(){
         Route::get('/', 'index')->name('index')->middleware('role:super-admin');
         Route::post('/', 'store')->name('store')->middleware('role:super-admin');
@@ -81,7 +82,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{coupon}', 'destroy')->name('destroy')->middleware('role:super-admin');
         Route::get('/{coupon}/edit', 'edit')->name('edit')->middleware('role:super-admin');
     });
-    Route::resource('users', UserController::class);
+    // Route::resource('users', UserController::class);
     Route::prefix('users')->controller(UserController::class)->name('users.')->group(function(){
         Route::get('/', 'index')->name('index')->middleware('permission:show-user');
         Route::post('/', 'store')->name('store');
@@ -126,14 +127,14 @@ Route::middleware('auth')->group(function () {
             Route::get('/{coupon}/edit', 'edit')->name('edit')->middleware('permission:update-coupon');
     });
 
+    Route::resource('warehouse', WarehouseController::class);
 
 
 
 
-
-    Route::get('orders', [AdminOrderController::class, 'index'])->name('admin.orders.index')->middleware('list-order');
-    Route::post('update-status/{id}', [AdminOrderController::class, 'updateStatus'])->name('admin.orders.update_status')->middleware('list-order');
-
+    Route::get('orders', [AdminOrderController::class, 'index'])->name('admin.orders.index');
+    Route::post('update-status/{id}', [AdminOrderController::class, 'updateStatus'])->name('admin.orders.update_status');
+    Route::get('/order/{id}',  [AdminOrderController::class, 'show'])->name('admin.orders.show');
     
 
 
@@ -141,4 +142,3 @@ Route::middleware('auth')->group(function () {
 
 Route::post('/vnpay_payment', [PaymentController::class, 'vnpay_payment']);
 
-Auth::routes();

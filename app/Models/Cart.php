@@ -47,4 +47,14 @@ class Cart extends Model
             return $carry + $price;
         }, 0) : 0;
     }
+
+    public function order()
+    {
+        return $this->hasOne(Order::class);
+    }
+
+    public function cartProducts()
+    {
+        return $this->hasMany(CartProduct::class);
+    }
 }

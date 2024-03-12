@@ -25,6 +25,17 @@ class Order extends Model
     {
         return $this->whereUserId($userId)->latest('id')->paginate(10);
     }
-
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function productOrders()
+    {
+        return $this->hasMany(ProductOrder::class);
+    }
+    public function cart()
+    {
+        return $this->belongsTo(Cart::class);
+    }
     
 }

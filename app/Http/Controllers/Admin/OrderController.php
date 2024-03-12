@@ -31,4 +31,11 @@ class OrderController extends Controller
         ], Response::HTTP_OK);
 
     }
+    
+    public function show($orderId){
+        // $order = Order::with('productOrders')->find($orderId);
+        
+        $order = Order::with('cart.cartProducts.productOrder.product')->findOrFail($orderId);
+        return view('admin.orders.show', compact('order'));
+    }
 }

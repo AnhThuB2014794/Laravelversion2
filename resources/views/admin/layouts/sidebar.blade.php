@@ -84,13 +84,21 @@
                 <a class="nav-link text-white {{ request()->routeIs('admin.orders.*') ? 'bg-gradient-primary active' :'' }} "
                     href="{{route('admin.orders.index')}}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">format_textdirection_r_to_l</i>
+                        <i class="material-icons opacity-10">shopping_cart</i>
                     </div>
                     <span class="nav-link-text ms-1">Đơn hàng</span>
                 </a>
             </li>
 
-
+            <li class="nav-item">
+                <a class="nav-link text-white {{ request()->routeIs('warehouse.*') ? 'bg-gradient-primary active' :'' }} "
+                    href="{{ route('warehouse.index') }}">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">warehouse</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Kho hàng</span>
+                </a>
+            </li>
         </ul>
     </div>
 </aside>

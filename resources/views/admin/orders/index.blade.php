@@ -22,6 +22,7 @@
                          <th>Địa chỉ</th>
                          <th>Ghi chú</th>
                          <th>Thanh toán</th>
+                         <th>Hành động</th>
                      </tr>
 
                      @foreach ($orders as $item)
@@ -49,6 +50,7 @@
                          <td>{{ $item->customer_address }}</td>
                          <td>{{ $item->note }}</td>
                          <td>{{ $item->payment }}</td>
+                         <td><a href="{{ route('admin.orders.show', $item->id) }}" class="btn btn-primary">Chi tiết</a></td>
 
                      </tr>
                      @endforeach
