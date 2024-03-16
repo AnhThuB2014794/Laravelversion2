@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\MaterialController;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\ProductController as ClientProductController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
@@ -128,7 +129,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::resource('warehouse', WarehouseController::class);
-
+    Route::resource('materials',MaterialController::class);
 
 
 

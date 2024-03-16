@@ -13,7 +13,7 @@
     <h1>
         Order Detail - Order #{{ $order->id }}
     </h1>
-    <p>Order Date: {{ $order->created_at }}</p>
+    <p>Ngày tạo đơn hàng: {{ $order->created_at->format('d-m-y') }}</p>
     <div>
         <table class="table table-hover">
             <tr class="table-primary">
@@ -46,7 +46,7 @@
          
             <tr class="table-dark">
                 
-                <th>Total: {{ $order->total }} VNĐ</th>
+                <th>Total: {{ number_format($order->total) }}VNĐ</th>
                 <th></th>
                 <th></th>
 

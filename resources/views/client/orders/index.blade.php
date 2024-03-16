@@ -31,9 +31,9 @@
                     <td>{{ $item->id }}</td>
 
                     <td>{{ $item->status }}</td>
-                    <td>{{ $item->total }}VNĐ</td>
+                    <td>{{number_format($item->total)  }}VNĐ</td>
 
-                    <td>{{ $item->ship }}VNĐ</td>
+                    <td>{{number_format($item->ship)  }}VNĐ</td>
                     <td>{{ $item->customer_name }}</td>
                     <td>{{ $item->customer_email }}</td>
 

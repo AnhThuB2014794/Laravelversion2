@@ -43,7 +43,7 @@
             <div class="d-flex mb-3">
 
             </div>
-            <h3 class="font-weight-semi-bold mb-4">{{ $product->price }}VND</h3>
+            <h3 class="font-weight-semi-bold mb-4">{{number_format( $product->price) }}VND</h3>
 
 
             <div class="d-flex mb-4">

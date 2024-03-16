@@ -66,12 +66,12 @@
                     <div class="d-flex justify-content-between">
                         <p> {{ $item->product_quantity }} x {{ $item->product->name }}</p>
                         <p style="{{ $item->product->sale ? 'text-decoration: line-through' : ''}}">
-                            {{ $item->product_quantity * $item->product->price }}VNĐ
+                            {{number_format($item->product_quantity * $item->product->price)  }}VNĐ
                         </p>
 
                         @if ($item->product->sale)
                         <p>
-                            {{ $item->product_quantity * $item->product->sale_price }}VNĐ
+                            {{ number_format($item->product_quantity * $item->product->sale_price) }}VNĐ
                         </p>
                         @endif
 
@@ -82,12 +82,12 @@
                     <div class="d-flex justify-content-between mb-3 pt-1">
                         <h6 class="font-weight-medium">Tổng</h6>
                         <h6 class="font-weight-medium total-price" data-price="{{ $cart->total_price }}">
-                            {{ $cart->total_price }}VNĐ</h6>
+                            {{ number_format($cart->total_price) }}VNĐ</h6>
 
                     </div>
                     <div class="d-flex justify-content-between">
                         <h6 class="font-weight-medium">Phí vận chuyển</h6>
-                        <h6 class="font-weight-medium shipping" data-price="20000">20000VNĐ</h6>
+                        <h6 class="font-weight-medium shipping" data-price="20000">20,000VNĐ</h6>
                         <input type="hidden" value="20000" name="ship">
 
                     </div>
@@ -95,7 +95,7 @@
                     <div class="d-flex justify-content-between">
                         <h6 class="font-weight-medium">Mã giảm giá </h6>
                         <h6 class="font-weight-medium coupon-div" data-price="{{ session('discount_amount_price') }}">
-                            {{ session('discount_amount_price') }}VNĐ</h6>
+                            {{number_format(session('discount_amount_price'))  }}VNĐ</h6>
                     </div>
                     @endif
 
@@ -143,8 +143,15 @@ $(function() {
         let total = $('.total-price').data('price')
         let couponPrice = $('.coupon-div')?.data('price') ?? 0;
         let shiping = $('.shipping').data('price')
-        $('.total-price-all').text(`${total + shiping - couponPrice}VNĐ`)
+        // $('.total-price-all').text(`${total + shiping - couponPrice}VNĐ`)
         $('#total').val(total + shiping - couponPrice)
+        var totalPrice = total + shiping - couponPrice;
+
+        // Định dạng giá trị tiền tệ với dấu ngăn cách
+        var formattedTotalPrice = totalPrice.toLocaleString('vi-VN');
+
+        // Thay đổi nội dung của phần tử có class "total-price-all" thành giá trị tiền tệ đã định dạng
+        $(".total-price-all").text(`${formattedTotalPrice}VNĐ`);
     }
 
 });

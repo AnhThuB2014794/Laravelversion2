@@ -16,12 +16,14 @@
                          <th>#</th>
                          <th>Trạng thái</th>
                          <th>Tổng</th>
-                         <th>Phí vận chuyển</th>
+                         {{-- <th>Phí vận chuyển</th> --}}
                          <th>Tên KH</th>
                          <th>Email KH</th>
                          <th>Địa chỉ</th>
                          <th>Ghi chú</th>
                          <th>Thanh toán</th>
+                         <th>Ngày tạo</th>
+                         <th>Ngày nhận</th>
                          <th>Hành động</th>
                      </tr>
 
@@ -41,15 +43,17 @@
                                  </select>
 
                          </td>
-                         <td>{{ $item->total }}VNĐ</td>
+                         <td>{{ number_format($item->total) }}VNĐ</td>
 
-                         <td>{{ $item->ship }}VNĐ</td>
+                         {{-- <td>{{ $item->ship }}VNĐ</td> --}}
                          <td>{{ $item->customer_name }}</td>
                          <td>{{ $item->customer_email }}</td>
 
                          <td>{{ $item->customer_address }}</td>
                          <td>{{ $item->note }}</td>
                          <td>{{ $item->payment }}</td>
+                         <td>{{ $item->created_at->format('d-m-Y') }}</td>
+                         <td>{{ $item->updated_at->format('d-m-Y') }}</td>
                          <td><a href="{{ route('admin.orders.show', $item->id) }}" class="btn btn-primary">Chi tiết</a></td>
 
                      </tr>

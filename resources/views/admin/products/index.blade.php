@@ -18,6 +18,8 @@
                 <th>Tên sản phẩm</th>
                 <th>Giá</th>
                 <th>Giảm giá</th>
+                <th>Ngày tạo</th>
+                <th>Ngày cập nhật</th>
                 <th>Hoạt động</th>
             </tr>
             @foreach ($products as $item)
@@ -27,8 +29,10 @@
                         width="200px" height="200px" alt=""></td>
 
                 <td>{{ $item->name}}</td>
-                <td>{{ $item->price}}</td>
+                <td>{{ number_format($item->price)}}VNĐ</td>
                 <td>{{ $item->sale}}</td>
+                <td>{{ $item->created_at->format('d-m-Y') }}</td>
+                <td>{{ $item->updated_at->format('d-m-Y') }}</td>
                 <td>
                     @can('update-product')
                     <a href="{{ route('products.edit', $item->id)}}" class="btn btn-success"><i
