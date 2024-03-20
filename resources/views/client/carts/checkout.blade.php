@@ -143,7 +143,8 @@ $(function() {
         let total = $('.total-price').data('price')
         let couponPrice = $('.coupon-div')?.data('price') ?? 0;
         let shiping = $('.shipping').data('price')
-        // $('.total-price-all').text(`${total + shiping - couponPrice}VNĐ`)
+        // $('.total-price-all'
+        ).text(`${total + shiping - couponPrice}VNĐ`)
         $('#total').val(total + shiping - couponPrice)
         var totalPrice = total + shiping - couponPrice;
 

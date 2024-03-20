@@ -63,10 +63,22 @@ class RoleDatabaseSeeder extends Seeder
             ['name' => 'show-coupon', 'display_name' => 'Hiển thị phiếu giảm giá', 'group' => 'Phiếu giảm giá'],
             ['name' => 'delete-coupon', 'display_name' => 'Xóa phiếu giảm giá', 'group' => 'Phiếu giảm giá'],
 
+           
+           
+            ['name' => 'show-warehouse','display_name'=> 'Hiển thị kho hàng', 'group'=>'Kho hàng'],
+           
+
+
+            ['name' => 'create-material','display_name'=> 'Tạo mới sản phẩm nhập vào', 'group'=>'Sản phẩm nhập vào'],
+            ['name' => 'update-material','display_name'=> 'Cập nhật sản phẩm nhập vào', 'group'=>'Sản phẩm nhập vào'],
+            ['name' => 'show-material','display_name'=> 'Hiển thị sản phẩm nhập vào', 'group'=>'Sản phẩm nhập vào'],
+            ['name' => 'delete-material','display_name'=> 'Xóa sản phẩm nhập vào ', 'group'=>'Sản phẩm nhập vào'],
+
+
             ['name' => 'list-order', 'display_name' => 'Danh sách đơn hàng', 'group' => 'Đơn hàng'],
             ['name' => 'update-order-status', 'display_name' => 'Cập nhật trạng thái đơn hàng', 'group' => 'Đơn hàng'],
 
-
+            ['name' => 'show-dashboard','display_name'=> 'Hiển thị thống kê', 'group'=>'Thống kê'],
         ];
         foreach($permissions as $item){
             Permisson::updateOrCreate($item);

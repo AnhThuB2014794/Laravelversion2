@@ -14,8 +14,8 @@
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link text-white {{ request()->routeIs('dashboard') ? 'bg-gradient-primary active' :'' }} "
-                    href="{{ route('dashboard')}}">
+                <a class="nav-link text-white {{ request()->routeIs('dashboard.*') ? 'bg-gradient-primary active' :'' }} "
+                    href="{{ route('dashboard.index')}}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">dashboard</i>
                     </div>
@@ -79,7 +79,7 @@
                 </a>
             </li>
             @endcan
-
+            @can('update-order-status')
             <li class="nav-item">
                 <a class="nav-link text-white {{ request()->routeIs('admin.orders.*') ? 'bg-gradient-primary active' :'' }} "
                     href="{{route('admin.orders.index')}}">
@@ -89,7 +89,8 @@
                     <span class="nav-link-text ms-1">Đơn hàng</span>
                 </a>
             </li>
-
+            @endcan
+            @can('show-warehouse')
             <li class="nav-item">
                 <a class="nav-link text-white {{ request()->routeIs('warehouse.*') ? 'bg-gradient-primary active' :'' }} "
                     href="{{ route('warehouse.index') }}">
@@ -99,6 +100,8 @@
                     <span class="nav-link-text ms-1">Kho hàng</span>
                 </a>
             </li>
+            @endcan
+            @can('show-material')
             <li class="nav-item">
                 <a class="nav-link text-white {{ request()->routeIs('materials.*') ? 'bg-gradient-primary active' :'' }} "
                     href="{{ route('materials.index') }}">
@@ -110,6 +113,7 @@
                     <span class="nav-link-text ms-1">Sản phẩm nhập vào</span>
                 </a>
             </li>
+            @endcan
         </ul>
     </div>
 </aside>

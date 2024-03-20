@@ -18,6 +18,7 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,8 +67,11 @@ Route::middleware('auth')->group(function () {
 
 Auth::routes();
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
+    // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::prefix('dashboard')->controller(DashboardController::class)->name('dashboard.')->group(function(){
+        Route::get('/', 'index')->name('index')->middleware('permission:show-dashboard');
+        
+    });
     // Route::resource('roles', RoleController::class);
     // Route::resource('users', UserController::class);
     // Route::resource('categories', CategoryController::class);
@@ -128,9 +132,21 @@ Route::middleware('auth')->group(function () {
             Route::get('/{coupon}/edit', 'edit')->name('edit')->middleware('permission:update-coupon');
     });
 
-    Route::resource('warehouse', WarehouseController::class);
-    Route::resource('materials',MaterialController::class);
-
+    // Route::resource('warehouse', WarehouseController::class);
+    Route::prefix('warehouse')->controller(WarehouseController::class)->name('warehouse.')->group(function(){
+        Route::get('/', 'index')->name('index')->middleware('permission:show-warehouse');
+        
+    });
+    // Route::resource('materials',MaterialController::class);
+    Route::prefix('materials')->controller(MaterialController::class)->name('materials.')->group(function(){
+        Route::get('/', 'index')->name('index')->middleware('permission:show-material');
+        Route::post('/', 'store')->name('store')->middleware('permission:create-material');
+        Route::get('/create', 'create')->name('create')->middleware('permission:create-material');
+        Route::get('/{material}', 'show')->name('show')->middleware('permission:show-material');
+        Route::put('/{material}', 'update')->name('update')->middleware('permission:update-material');
+        Route::delete('/{material}', 'destroy')->name('destroy')->middleware('permission:delete-material');
+        Route::get('/{material}/edit', 'edit')->name('edit')->middleware('permission:update-material');
+});
 
 
     Route::get('orders', [AdminOrderController::class, 'index'])->name('admin.orders.index');

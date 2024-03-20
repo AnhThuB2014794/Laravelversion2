@@ -43,7 +43,7 @@ class UserController extends Controller
         $dataCreate = $request->all();
         $dataCreate['password'] = Hash::make($request->password);
         $user = $this->user->create($dataCreate);
-
+        $user->roles()->attach($dataCreate['role_ids']);
         return to_route('users.index')->with(['message' => 'Tạo thành công']);
     }
 
@@ -69,7 +69,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, string $id)
+    public function update(Request $request, string $id)
     {
         $dataUpdate = $request->except('password');
         $user = $this->user->findOrFail($id)->load('roles');
@@ -78,7 +78,7 @@ class UserController extends Controller
         }
         
         $user->update($dataUpdate);
-        $user->roles()->sync($dataUpdate['role_ids']);
+        $user->roles()->sync($dataUpdate['role_ids'] ?? []);
         return to_route('users.index')->with(['message' => 'Cập nhật thành công']);
     }
 
