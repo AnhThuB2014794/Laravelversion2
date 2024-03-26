@@ -3,11 +3,11 @@
 @section('title', 'products')
 @section('content')
 <div class="row ">
-    <div class="d-inline-flex" style="margin-left:40px">
+    <!-- <div class="d-inline-flex" style="margin-left:40px">
         <p class="m-0"><a href="">Home</a></p>
         <p class="m-0 px-2">/</p>
         <p class="m-0">Shop</p>
-    </div>
+    </div> -->
 </div>
 <!-- Page Header End -->
 
@@ -18,7 +18,7 @@
         <!-- Shop Sidebar Start -->
         <div class="col-lg-3 col-md-12">
             <!-- Price Start -->
-            <div class="border-bottom mb-4 pb-4">
+            <!-- <div class="border-bottom mb-4 pb-4">
                 <h5 class="font-weight-semi-bold mb-4">Filter by price</h5>
                 <form>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
@@ -53,10 +53,10 @@
                     </div>
                 </form>
             </div>
-            <!-- Price End -->
+            Price End -->
 
             <!-- Color Start -->
-            <div class="border-bottom mb-4 pb-4">
+            <!-- <div class="border-bottom mb-4 pb-4">
                 <h5 class="font-weight-semi-bold mb-4">Filter by color</h5>
                 <form>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
@@ -90,11 +90,11 @@
                         <span class="badge border font-weight-normal">168</span>
                     </div>
                 </form>
-            </div>
+            </div> -->
             <!-- Color End -->
 
             <!-- Size Start -->
-            <div class="mb-5">
+            <!-- <div class="mb-5">
                 <h5 class="font-weight-semi-bold mb-4">Filter by size</h5>
                 <form>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
@@ -128,7 +128,7 @@
                         <span class="badge border font-weight-normal">168</span>
                     </div>
                 </form>
-            </div>
+            </div> -->
             <!-- Size End -->
         </div>
         <!-- Shop Sidebar End -->
@@ -139,7 +139,7 @@
             <div class="row pb-3">
                 <div class="col-12 pb-1">
                     <div class="d-flex align-items-center justify-content-between mb-4">
-                        <form action="">
+                        <!-- <form action="">
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="Search by name">
                                 <div class="input-group-append">
@@ -147,9 +147,9 @@
                                         <i class="fa fa-search"></i>
                                     </span>
                                 </div>
-                            </div>
+                            </div> -->
                         </form>
-                        <div class="dropdown ml-4">
+                        <!-- <div class="dropdown ml-4">
                             <button class="btn border dropdown-toggle" type="button" id="triggerId"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Sort by
@@ -159,7 +159,7 @@
                                 <a class="dropdown-item" href="#">Popularity</a>
                                 <a class="dropdown-item" href="#">Best Rating</a>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 
@@ -175,20 +175,19 @@
                         <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                             <h6 class="text-truncate mb-3">{{ $item->name }}</h6>
                             <div class="d-flex justify-content-center">
-                                <h6>${{ $item->price }}</h6>
-                                <h6 class="item-muted ml-2"><del>${{ $item->price }}</del></h6>
+                                <h6>{{number_format($item->price)  }}VNĐ</h6>
+                                <h6 class="item-muted ml-2"><del>{{number_format($item->price*1.5) }}VNĐ</del></h6>
                             </div>
                         </div>
                         <div class="card-footer d-flex justify-content-between bg-light border">
                             <a href="{{ route('client.products.show', $item->id) }}" class="btn btn-sm text-dark p-0"><i
-                                    class="fas fa-eye text-primary mr-1"></i>View
-                                Detail</a>
-                            <a href="" class="btn btn-sm text-dark p-0"><i
-                                    class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                                    class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
+
                         </div>
                     </div>
                 </div>
                 @endforeach
+
 
 
                 <div class="col-12 pb-1">

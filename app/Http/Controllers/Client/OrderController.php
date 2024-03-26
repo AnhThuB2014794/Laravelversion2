@@ -26,8 +26,8 @@ class OrderController extends Controller
     public function cancel($id)
     {
         $order =  $this->order->findOrFail($id);
-        $order->update(['status' => 'cancel']);
-        return redirect()->route('client.orders.index')->with(['message' => 'cancel success']);
+        $order->update(['status' => 'Hủy']);
+        return redirect()->route('client.orders.index')->with(['message' => 'Hủy thành công']);
     }
 
 

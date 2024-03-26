@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title', 'Roles')
+@section('title', 'User')
 @section('content')
 <div class="card">
     <h1>
@@ -11,7 +11,7 @@
 
     <div><a href="{{ route('users.create')}}" class="btn btn-primary">Tạo mới</a></div>
     <div>
-        <table class="table table-hover">
+        <table class="table table-bordered table-hover table-condensed">
             <tr>
                 <th>#</th>
                 <th>Tên</th>

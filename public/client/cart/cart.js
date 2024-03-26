@@ -4,7 +4,14 @@ $(function () {
     function getTotalValue() {
         let total = $(".total-price").data("price");
         let couponPrice = $(".coupon-div")?.data("price") ?? 0;
-        $(".total-price-all").text(`${total - couponPrice} VNĐ`);
+        // $(".total-price-all").text(`${total - couponPrice} VNĐ`);
+        var totalPrice = total - couponPrice;
+
+        // Định dạng giá trị tiền tệ với dấu ngăn cách
+        var formattedTotalPrice = totalPrice.toLocaleString("vi-VN");
+
+        // Thay đổi nội dung của phần tử có class "total-price-all" thành giá trị tiền tệ đã định dạng
+        $(".total-price-all").text(`${formattedTotalPrice}VNĐ`);
     }
 
     $(document).on("click", ".btn-remove-product", function (e) {

@@ -29,7 +29,7 @@
                 <label name="group" class="ms-0">Loại</label>
                 <select name="type" class="form-control">
                     <option> Chọn loại</option>
-                    <option value="money" {{ (old('type') ?? $coupon->type) == 'money' ? 'selected' : '' }}> Money
+                    <option value="money" {{ (old('type') ?? $coupon->type) == 'money' ? 'selected' : '' }}> Tiền
                     </option>
 
                 </select>

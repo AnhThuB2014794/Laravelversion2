@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Session;
 
 use App\Http\Requests\Orders\CreateOrderRequest;
 use App\Models\ProductOrder;
+use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
@@ -163,6 +164,7 @@ class CartController extends Controller
         return redirect()->route('client.carts.index')->with([
             'message' => $message,
         ]);
+       
     }
     public function checkout()
     {
@@ -187,7 +189,24 @@ class CartController extends Controller
             }
         }
         $cart = $this->cart->firtOrCreateBy(auth()->user()->id);
-       
+        $cartItems = $cart->products;
+
+        // Thêm từng sản phẩm vào đơn hàng và bảng product_order
+        foreach ($cartItems as $item) {
+            
+            // Thêm chi tiết giỏ hàng vào bảng product_order
+            DB::table('product_orders')->insert([
+                
+            'product_size' => $item->product_size,
+            'product_quantity' => $item->product_quantity,
+            'product_price' => $item->product_price,
+            'order_id' => $order->id,
+            'user_id' => $order->user->id,
+            'product_id' => $item->product->id,
+                // Thêm các thông tin khác nếu cần
+            ]);
+        }
+    
         $cart->products()->delete();
         Session::forget(['coupon_id', 'discount_amount_price', 'coupon_code']);
         return redirect()->route('client.carts.index');

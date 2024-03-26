@@ -1,6 +1,7 @@
 @extends('client.layouts.app')
 
 @section('content')
+<br>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -81,11 +82,11 @@
                                     class="form-control @error('password') is-invalid @enderror" name="password"
                                     required autocomplete="new-password">
 
-                                <!-- @error('password')
+                                @error('password')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
-                                @enderror -->
+                                @enderror
                             </div>
                         </div>
 

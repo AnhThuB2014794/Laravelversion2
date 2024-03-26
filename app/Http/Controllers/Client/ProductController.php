@@ -48,6 +48,12 @@ class ProductController extends Controller
         //
     }
 
+    public function search(Request $request){
+        $keyword = $request->input('keyword');
+        $products = Product::where('name', 'like', "%$keyword%")->paginate(10);
+        return view('client.products.index', compact('products'));
+    }
+
     /**
      * Display the specified resource.
      *

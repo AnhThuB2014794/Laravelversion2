@@ -42,7 +42,7 @@
                 <label for="">Số điện thoại</label>
                 <input type="phone" value="{{ old('phone') ?? $user->phone}}" name="phone" class="form-control">
 
-                @error('email')
+                @error('phone')
                 <span class="text-danger">{{$message}}</span>
                 @enderror
             </div>

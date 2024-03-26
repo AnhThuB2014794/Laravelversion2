@@ -4,9 +4,9 @@
 <!-- Page Header Start -->
 <div class="row" style="margin-left: 50px">
     <div class="d-inline-flex">
-        <p class="m-0"><a href="">Home</a></p>
+        <p class="m-0"><a href="{{ route('client.home') }}">Trang chủ</a></p>
         <p class="m-0 px-2">/</p>
-        <p class="m-0">Shop Detail</p>
+        <p class="m-0">Chi tiết sản phẩm</p>
     </div>
 </div>
 <!-- Page Header End -->
@@ -43,7 +43,7 @@
             <div class="d-flex mb-3">
 
             </div>
-            <h3 class="font-weight-semi-bold mb-4">{{ $product->price }}VND</h3>
+            <h3 class="font-weight-semi-bold mb-4">{{number_format( $product->price) }}VND</h3>
 
 
             <div class="d-flex mb-4">
@@ -80,7 +80,7 @@
                         </button>
                     </div>
                 </div>
-                <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
+                <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Thêm vào giỏ hàng</button>
             </div>
             <div class="d-flex pt-2">
                 <p class="text-dark font-weight-medium mb-0 mr-2">Share on:</p>
@@ -104,12 +104,12 @@
     <div class="row px-xl-5">
         <div class="col">
             <div class="nav nav-tabs justify-content-center border-secondary mb-4">
-                <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Description</a>
-                <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Reviews (0)</a>
+                <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Mô tả</a>
+                <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Phản hồi (0)</a>
             </div>
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="tab-pane-1">
-                    <h4 class="mb-3">Product Description</h4>
+                    <h4 class="mb-3">Mô tả sản phẩm</h4>
                     {!! $product->description !!}
                 </div>
 

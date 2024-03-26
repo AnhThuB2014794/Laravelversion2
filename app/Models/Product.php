@@ -44,5 +44,5 @@ class Product extends Model
         return $this->attributes['sale'] ? $this->attributes['price'] - ($this->attributes['sale'] * 0.01 * $this->attributes['price']) : 0;
     }
 
-
+    
 }

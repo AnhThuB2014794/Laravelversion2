@@ -18,7 +18,7 @@ class OrderController extends Controller
 
     public function index()
     {
-        $orders =  $this->order->getWithPaginateBy(auth()->user()->id);
+        $orders =  $this->order->latest('id')->paginate(5);
         return view('admin.orders.index', compact('orders'));
     }
 
@@ -30,5 +30,12 @@ class OrderController extends Controller
             'message' => 'success'
         ], Response::HTTP_OK);
 
+    }
+    
+    public function show($orderId){
+        // $order = Order::with('productOrders')->find($orderId);
+        
+        $order = Order::with('cart.cartProducts.productOrder.product')->findOrFail($orderId);
+        return view('admin.orders.show', compact('order'));
     }
 }

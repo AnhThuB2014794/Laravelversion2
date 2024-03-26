@@ -9,7 +9,7 @@
                 <h4 class="font-weight-semi-bold mb-4">Billing Address</h4>
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <label>Name</label>
+                        <label>Tên</label>
                         <input class="form-control" value="{{ old('customer_name') }}" name="customer_name" type="text"
                             placeholder="John">
                         @error('customer_name')
@@ -27,7 +27,7 @@
                         @enderror ()
                     </div>
                     <div class="col-md-6 form-group">
-                        <label>Mobile No</label>
+                        <label>Số điện thoại</label>
                         <input class="form-control" name="customer_phone" value="{{ old('customer_phone') }}"
                             type="text" placeholder="+123 456 789">
                         @error('customer_phone')
@@ -35,7 +35,7 @@
                         @enderror ()
                     </div>
                     <div class="col-md-6 form-group">
-                        <label>Address </label>
+                        <label>Địa chỉ </label>
                         <input class="form-control" name="customer_address" value="{{ old('customer_address') }}"
                             type="text" placeholder="123 Street">
                         @error('customer_address')
@@ -43,7 +43,7 @@
                         @enderror ()
                     </div>
                     <div class="col-md-6 form-group">
-                        <label>Note </label>
+                        <label>Ghi chú </label>
                         <input class="form-control" value="{{ old('note') }}" name="note" type="text"
                             placeholder="123 Street">
                         @error('note')
@@ -66,12 +66,12 @@
                     <div class="d-flex justify-content-between">
                         <p> {{ $item->product_quantity }} x {{ $item->product->name }}</p>
                         <p style="{{ $item->product->sale ? 'text-decoration: line-through' : ''}}">
-                            {{ $item->product_quantity * $item->product->price }}VNĐ
+                            {{number_format($item->product_quantity * $item->product->price)  }}VNĐ
                         </p>
 
                         @if ($item->product->sale)
                         <p>
-                            {{ $item->product_quantity * $item->product->sale_price }}VNĐ
+                            {{ number_format($item->product_quantity * $item->product->sale_price) }}VNĐ
                         </p>
                         @endif
 
@@ -82,12 +82,12 @@
                     <div class="d-flex justify-content-between mb-3 pt-1">
                         <h6 class="font-weight-medium">Tổng</h6>
                         <h6 class="font-weight-medium total-price" data-price="{{ $cart->total_price }}">
-                            {{ $cart->total_price }}VNĐ</h6>
+                            {{ number_format($cart->total_price) }}VNĐ</h6>
 
                     </div>
                     <div class="d-flex justify-content-between">
                         <h6 class="font-weight-medium">Phí vận chuyển</h6>
-                        <h6 class="font-weight-medium shipping" data-price="20000">20000VNĐ</h6>
+                        <h6 class="font-weight-medium shipping" data-price="20000">20,000VNĐ</h6>
                         <input type="hidden" value="20000" name="ship">
 
                     </div>
@@ -95,7 +95,7 @@
                     <div class="d-flex justify-content-between">
                         <h6 class="font-weight-medium">Mã giảm giá </h6>
                         <h6 class="font-weight-medium coupon-div" data-price="{{ session('discount_amount_price') }}">
-                            {{ session('discount_amount_price') }}VNĐ</h6>
+                            {{number_format(session('discount_amount_price'))  }}VNĐ</h6>
                     </div>
                     @endif
 
@@ -111,22 +111,33 @@
             <div class="card border-secondary mb-5">
                 <div class="card-header bg-secondary border-0">
                     <h4 class="font-weight-semi-bold m-0">Phương thức thanh toán</h4>
-                </div>
-                <div class="card-body">
-                    <div class="form-group">
-                        <a href="" class="btn btn-success">Thanh toán khi nhận hàng</a>
-                        <hr>
-                        <form action="" method="POST">
+                    <div class="select-button">
+                        <form action="{{route('payment.vnpay')}}" method="POST">
                             @csrf
                             <button type="submit" name="redirect" class="primary-btn checkout-btn"
-                                style="width:100%">Thanh toán VnPay</button>
+                                style="width: 100%;">Thanh toan VnPay</button>
                         </form>
                     </div>
+                </div>
 
-                </div>
-                <div class="card-footer border-secondary bg-transparent">
+                <!-- <div class="card-body">
+                    <div class="form-group">
+                        <div class="payment-options">
+                            <label for="payment-cash">
+                                <input type="radio" id="payment-cash" name="payment" value="Tiền mặt">
+                                <span>Thanh toán bằng tiền mặt</span>
+                            </label>
+                            <label for="payment-card">
+                                <input type="radio" id="payment-card" name="payment" value="Thẻ">
+                                <span>Thanh toán bằng thẻ tín dụng</span>
+                            </label>
+                        </div>
+                    </div>
+
+                </div> -->
+                <!-- <div class="card-footer border-secondary bg-transparent">
                     <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Đặt hàng</button>
-                </div>
+                </div> -->
             </div>
         </div>
     </form>
@@ -143,8 +154,15 @@ $(function() {
         let total = $('.total-price').data('price')
         let couponPrice = $('.coupon-div')?.data('price') ?? 0;
         let shiping = $('.shipping').data('price')
-        $('.total-price-all').text(`${total + shiping - couponPrice}VNĐ`)
+        // $('.total-price-all').text(`${total + shiping - couponPrice}VNĐ`)
         $('#total').val(total + shiping - couponPrice)
+        var totalPrice = total + shiping - couponPrice;
+
+        // Định dạng giá trị tiền tệ với dấu ngăn cách
+        var formattedTotalPrice = totalPrice.toLocaleString('vi-VN');
+
+        // Thay đổi nội dung của phần tử có class "total-price-all" thành giá trị tiền tệ đã định dạng
+        $(".total-price-all").text(`${formattedTotalPrice}VNĐ`);
     }
 
 });

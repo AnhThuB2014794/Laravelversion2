@@ -12,11 +12,13 @@ use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\ProductController as ClientProductController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\Admin\MaterialController;
+use App\Http\Controllers\Admin\WarehouseController;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,7 +33,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('client.home');
 Route::get('product/{category_id}', [ClientProductController::class, 'index'])->name('client.products.index');
 Route::get('product-detail/{id}', [ClientProductController::class, 'show'])->name('client.products.show');
-
+Route::post('product/search', [ClientProductController::class, 'search'])->name('products.search');
 Route::middleware('auth')->group(function () {
     Route::post('add-to-cart', [CartController::class, 'store'])->name('client.carts.add');
     Route::get('carts', [CartController::class, 'index'])->name('client.carts.index');
@@ -41,8 +43,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get('checkout', [CartController::class, 'checkout'])->name('client.checkout.index')->middleware('user.can_checkout_cart');
     Route::post('process-checkout', [CartController::class, 'processCheckout'])->name('client.checkout.proccess')->middleware('user.can_checkout_cart');
-
-    Route::post('vnpay_payment', [PaymentController::class, 'vnpay_payment'])->name('payment.vnpay_payment');
 
     Route::get('list-orders', [OrderController::class, 'index'])->name('client.orders.index');
 
@@ -64,7 +64,11 @@ Route::middleware('auth')->group(function () {
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+     Route::prefix('dashboard')->controller(DashboardController::class)->name('dashboard.')->group(function(){
+        Route::get('/', 'index')->name('index')->middleware('permission:show-dashboard');
+        
+    });
 
     // Route::resource('roles', RoleController::class);
     // Route::resource('users', UserController::class);
@@ -81,7 +85,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{coupon}', 'destroy')->name('destroy')->middleware('role:super-admin');
         Route::get('/{coupon}/edit', 'edit')->name('edit')->middleware('role:super-admin');
     });
-    Route::resource('users', UserController::class);
+    // Route::resource('users', UserController::class);
     Route::prefix('users')->controller(UserController::class)->name('users.')->group(function(){
         Route::get('/', 'index')->name('index')->middleware('permission:show-user');
         Route::post('/', 'store')->name('store');
@@ -127,18 +131,33 @@ Route::middleware('auth')->group(function () {
     });
 
 
+    // Route::resource('warehouse', WarehouseController::class);
+    Route::prefix('warehouse')->controller(WarehouseController::class)->name('warehouse.')->group(function(){
+        Route::get('/', 'index')->name('index')->middleware('permission:show-warehouse');
+        
+    });
+    // Route::resource('materials',MaterialController::class);
+    Route::prefix('materials')->controller(MaterialController::class)->name('materials.')->group(function(){
+        Route::get('/', 'index')->name('index')->middleware('permission:show-material');
+        Route::post('/', 'store')->name('store')->middleware('permission:create-material');
+        Route::get('/create', 'create')->name('create')->middleware('permission:create-material');
+        Route::get('/{material}', 'show')->name('show')->middleware('permission:show-material');
+        Route::put('/{material}', 'update')->name('update')->middleware('permission:update-material');
+        Route::delete('/{material}', 'destroy')->name('destroy')->middleware('permission:delete-material');
+        Route::get('/{material}/edit', 'edit')->name('edit')->middleware('permission:update-material');
+    });
 
-
-
-
-    Route::get('orders', [AdminOrderController::class, 'index'])->name('admin.orders.index')->middleware('list-order');
-    Route::post('update-status/{id}', [AdminOrderController::class, 'updateStatus'])->name('admin.orders.update_status')->middleware('list-order');
+    Route::get('orders', [AdminOrderController::class, 'index'])->name('admin.orders.index');
+    Route::post('update-status/{id}', [AdminOrderController::class, 'updateStatus'])->name('admin.orders.update_status');
+    Route::get('/order/{id}',  [AdminOrderController::class, 'show'])->name('admin.orders.show');
 
     
 
 
 });
 
-Route::post('/vnpay_payment', [PaymentController::class, 'vnpay_payment']);
+Route::post('/vnpay_payment', [PaymentController::class, 'vnpay_payment'])->name('payment.vnpay');
+Route::get('/payment/callback', [PaymentController::class, 'handleCallback'])->name('payment.callback');
+
 
 Auth::routes();

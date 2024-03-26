@@ -37,16 +37,19 @@
             </a>
         </div>
         <div class="col-lg-6 col-6 text-left">
-            <form action="">
+            <form action="{{route('products.search')}}" method="POST">
+                @csrf
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for products">
-                    <div class="input-group-append">
+                    <input type="text" name="keyword" class="form-control" placeholder="Nhập từ khóa bạn muốn tìm kiếm">
+                    <button type="submit">Tìm kiếm</button>
+                    <!-- <div class="input-group-append">
                         <span class="input-group-text bg-transparent text-primary">
                             <i class="fa fa-search"></i>
                         </span>
-                    </div>
+                    </div> -->
                 </div>
             </form>
+
         </div>
         <div class="col-lg-3 col-6 text-right">
 

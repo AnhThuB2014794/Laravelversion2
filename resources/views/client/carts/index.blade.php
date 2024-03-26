@@ -30,12 +30,12 @@
                         {{ $item->product->name }}</td>
                     <td class="align-middle">
                         <p style="{{ $item->product->sale ? 'text-decoration: line-through' : ''}}">
-                            {{ $item->product->price }} VNĐ
+                            {{ number_format($item->product->price) }} VNĐ
                         </p>
 
                         @if ($item->product->sale)
                         <p>
-                            {{ $item->product->sale_price }} VNĐ
+                            {{ number_format($item->product->sale_price) }} VNĐ
                         </p>
                         @endif
                     </td>
@@ -64,7 +64,7 @@
                     </td>
                     <td class="align-middle">
                         <span
-                            id="cartProductPrice{{ $item->id }}">{{ $item->product->sale ? $item->product->sale_price * $item->product_quantity : $item->product->price * $item->product_quantity }}
+                            id="cartProductPrice{{ $item->id }}">{{ number_format($item->product->sale ? $item->product->sale_price * $item->product_quantity : $item->product->price * $item->product_quantity) }}
                             VNĐ</span>
 
                     </td>
@@ -84,7 +84,7 @@
             @csrf
             <div class="input-group">
                 <input type="text" class="form-control p-4" value="{{ Session::get('coupon_code') }}" name="coupon_code"
-                    placeholder="Coupon Code">
+                    placeholder="Mã giảm giá">
                 <div class="input-group-append">
                     <button class="btn btn-primary">Áp dụng mã giảm giá</button>
                 </div>
@@ -92,13 +92,13 @@
         </form>
         <div class="card border-secondary mb-5">
             <div class="card-header bg-secondary border-0">
-                <h4 class="font-weight-semi-bold m-0">Cart Summary</h4>
+                <h4 class="font-weight-semi-bold m-0">Giỏ hàng </h4>
             </div>
             <div class="card-body">
                 <div class="d-flex justify-content-between mb-3 pt-1">
-                    <h6 class="font-weight-medium">Subtotal</h6>
+                    <h6 class="font-weight-medium">Tổng phụ</h6>
                     <h6 class="font-weight-medium total-price" data-price="{{ $cart->total_price }}">
-                        {{ $cart->total_price }} VNĐ</h6>
+                        {{number_format($cart->total_price ) }} VNĐ</h6>
                 </div>
 
 
@@ -106,7 +106,7 @@
                 <div class="d-flex justify-content-between">
                     <h6 class="font-weight-medium">Mã giảm giá </h6>
                     <h6 class="font-weight-medium coupon-div" data-price="{{ session('discount_amount_price') }}">
-                        {{ session('discount_amount_price') }} VNĐ</h6>
+                        {{number_format(session('discount_amount_price') ) }} VNĐ</h6>
                 </div>
                 @endif
 
@@ -116,8 +116,7 @@
                     <h5 class="font-weight-bold">Tổng</h5>
                     <h5 class="font-weight-bold total-price-all"></h5>
                 </div>
-                <a href="{{ route('client.checkout.index') }}" class="btn btn-block btn-primary my-3 py-3">Proceed
-                    To Checkout</a>
+                <a href="{{ route('client.checkout.index') }}" class="btn btn-block btn-primary my-3 py-3">Kiểm tra</a>
             </div>
         </div>
     </div>
