@@ -157,5 +157,5 @@ Route::middleware('auth')->group(function () {
 
 });
 
-Route::post('/vnpay_payment', [PaymentController::class, 'vnpay_payment']);
+// Route::post('/vnpay_payment', [PaymentController::class, 'vnpay_payment']);
 

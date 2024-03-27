@@ -113,15 +113,28 @@
                     <h4 class="font-weight-semi-bold m-0">Phương thức thanh toán</h4>
                 </div>
                 <div class="card-body">
-                    <div class="form-group">
-                        <a href="" class="btn btn-success">Thanh toán khi nhận hàng</a>
+                     <div class="form-group">
+                    {{--    <a href="" class="btn btn-success">Thanh toán khi nhận hàng</a>
                         <hr>
-                        <form action="" method="POST">
+                        {{-- <form action="{{ url('vnpay_payment') }}" method="POST">
                             @csrf
                             <button type="submit" name="redirect" class="primary-btn checkout-btn"
                                 style="width:100%">Thanh toán VnPay</button>
-                        </form>
-                    </div>
+                        </form>--}} 
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input type="radio" class="form-check-input"  value="monney" name="payment">
+                                <label class="form-check-label">Thanh toán khi nhận hàng</label>
+                            </div>
+                            
+                           
+                            {{-- <div class="form-check">
+                                <input type="radio" class="form-check-input"  value="VNPay" name="payment">
+                                <label class="form-check-label">VNPay</label>
+                            </div> --}}
+                        </div>
+                    </div> 
+
 
                 </div>
                 <div class="card-footer border-secondary bg-transparent">
@@ -130,6 +143,13 @@
             </div>
         </div>
     </form>
+    
+     <form action="{{ url('vnpay_payment') }}" method="POST">
+        @csrf
+        <button type="submit" name="redirect" class="primary-btn checkout-btn"
+            style="width:100%">Thanh toán VnPay</button>
+    </form> 
+   
 </div>
 @endsection
 @section('script')
@@ -143,7 +163,7 @@ $(function() {
         let total = $('.total-price').data('price')
         let couponPrice = $('.coupon-div')?.data('price') ?? 0;
         let shiping = $('.shipping').data('price')
-        // $('.total-price-all'
+        $('.total-price-all'
         ).text(`${total + shiping - couponPrice}VNĐ`)
         $('#total').val(total + shiping - couponPrice)
         var totalPrice = total + shiping - couponPrice;
