@@ -114,13 +114,13 @@
                 </div>
                 <div class="card-body">
                      <div class="form-group">
-                    {{--    <a href="" class="btn btn-success">Thanh toán khi nhận hàng</a>
+                    {{--    <a href="" class="btn btn-success">Thanh toán khi nhận hàng</a>---}}
                         <hr>
-                        {{-- <form action="{{ url('vnpay_payment') }}" method="POST">
+                         {{-- <form action="{{ url('vnpay_payment') }}" method="POST">
                             @csrf
                             <button type="submit" name="redirect" class="primary-btn checkout-btn"
                                 style="width:100%">Thanh toán VnPay</button>
-                        </form>--}} 
+                        </form> --}}
                         <div class="form-group">
                             <div class="form-check">
                                 <input type="radio" class="form-check-input"  value="monney" name="payment">
