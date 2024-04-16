@@ -28,7 +28,7 @@ class OrderController extends Controller
         $order =  $this->order->findOrFail($id);
         $order->update(['status' => $request->status]);
         return  response()->json([
-            'message' => 'success'
+            'message' => 'Thành công'
         ], Response::HTTP_OK);
 
     }

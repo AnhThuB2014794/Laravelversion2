@@ -44,7 +44,17 @@
 
             </div>
             <h3 class="font-weight-semi-bold mb-4">{{number_format( $product->price) }}VND</h3>
-
+            <h5>Số lượng hàng còn:</h5>
+                @foreach ($productDetails as $productDetail)
+                    @php
+                        // Tìm phần tử tương ứng trong $productOrders
+                        $order = $productOrders->firstWhere('product_size', $productDetail->size);
+                        // Tính số lượng còn lại
+                        $quantityRemaining = $productDetail->remaining_quantity - ($order ? $order->quantity_sold : 0);
+                    @endphp
+                    <p>Size: {{ $productDetail->size }}: Số lượng còn lại: {{ $quantityRemaining }}</p>
+                @endforeach
+            
 
             <div class="d-flex mb-4">
                 <p class="text-dark font-weight-medium mb-0 mr-3">Size:</p>
@@ -73,7 +83,7 @@
                             <i class="fa fa-minus"></i>
                         </button>
                     </div>
-                    <input type="text" class="form-control bg-secondary text-center" value="1">
+                    <input type="text" class="form-control bg-secondary text-center" value="1" readonly  >
                     <div class="input-group-btn">
                         <button class="btn btn-primary btn-plus">
                             <i class="fa fa-plus"></i>

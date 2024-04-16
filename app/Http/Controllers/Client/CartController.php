@@ -14,6 +14,7 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Session;
 
 use App\Http\Requests\Orders\CreateOrderRequest;
+use App\Models\ProductDetail;
 use App\Models\ProductOrder;
 use Illuminate\Support\Facades\DB;
 
@@ -60,6 +61,23 @@ class CartController extends Controller
     {
         if($request->product_size){
             $product = $this->product->findOrFail($request->product_id);
+            $selectedSize = $request->product_size;
+            //lấy sl sp trong csdl dựa trên size đã chọn 
+            $remainingQuantity = ProductDetail::where('product_id', $request->product_id)
+                ->where('size', $selectedSize)
+                ->sum('quantity');
+            //lấy sl sp đã bán ra trên size đã chọn 
+            $quantitySold = ProductOrder::join('orders', 'product_orders.order_id', '=', 'orders.id')
+                ->where('orders.status', 'Xác nhận')
+                ->where('product_orders.product_id', $request->product_id)
+                ->where('product_orders.product_size', $selectedSize)
+                ->sum('product_orders.product_quantity');
+            //kiem tra dieu kien tồn kho 
+            $availableQuantity = $remainingQuantity - $quantitySold ;
+            // dd($request->product_quantity);
+            // if ($request->product_quantity > $availableQuantity || $request->product_quantity <= 0) {
+            //     return back()->with(['message' => 'Số lượng nhập vào không hợp lệ']);   
+            // }
             $cart = $this->cart->firtOrCreateBy(auth()->user()->id);
             $cartProduct = $this->cartProduct->getBy($cart->id, $product->id, $request->product_size);
             if($cartProduct){
@@ -73,7 +91,9 @@ class CartController extends Controller
                 $dateCreate['product_id'] = $request->product_id;
                 $this->cartProduct->create($dateCreate);
             }
+        
             return back()->with(['message' => 'Thêm thành công']);
+            
         } else {
             return back()->with(['message' => 'Bạn chưa chọn size']);
         }
@@ -176,7 +196,7 @@ class CartController extends Controller
 
         $dataCreate = $request->all();
         $dataCreate['user_id'] = auth()->user()->id;
-        $dataCreate['status'] = 'pending';
+        $dataCreate['status'] = 'Chờ xác nhận';
         $order = $this->order->create($dataCreate);
         $couponID = Session::get('coupon_id');
         if($couponID)
@@ -208,7 +228,13 @@ class CartController extends Controller
     
         $cart->products()->delete();
         Session::forget(['coupon_id', 'discount_amount_price', 'coupon_code']);
+        if ($request->has('VNPAY')) {
+            // Chuyển hướng đến trang thanh toán trực tuyến, ví dụ: /payment/vnpay
+            // return redirect()->url('vnpay_payment');
+            return redirect()->link('vnpay_payment');
+        }else{
         return redirect()->route('client.carts.index');
+        }
     }
 
 

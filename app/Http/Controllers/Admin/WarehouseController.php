@@ -17,21 +17,40 @@ class WarehouseController extends Controller
     public function index()
     {
         $products = ProductDetail::with('product')->get();
+        // $products = ProductDetail::with('product')
+        // ->leftJoin('product_orders', function ($join) {
+        //     $join->on('product_details.product_id', '=', 'product_orders.product_id')
+        //     ->whereColumn('product_details.product_id', '=', 'product_orders.product_id')
+        //             ->whereColumn('product_details.size', '=', 'product_orders.product_size');
+        // })
+        // ->select(
+        //     'product_details.id', // Include the non-aggregated columns in the SELECT
+        //     'product_details.product_id',
+        //     'product_details.size',
+        //     'product_details.quantity', // Assuming this is a column in product_details table
+        //     DB::raw('COALESCE(SUM(product_orders.product_quantity), 0) as total_quantity_sold')
+        // )
+        // // ->where('orders.status', 'Xác nhận')
+        // ->groupBy('product_details.id', 'product_details.product_id', 'product_details.size', 'product_details.quantity')
+        // ->get();
         $products = ProductDetail::with('product')
         ->leftJoin('product_orders', function ($join) {
             $join->on('product_details.product_id', '=', 'product_orders.product_id')
-            ->whereColumn('product_details.product_id', '=', 'product_orders.product_id')
-                    ->whereColumn('product_details.size', '=', 'product_orders.product_size');
+                ->whereColumn('product_details.product_id', '=', 'product_orders.product_id')
+                ->whereColumn('product_details.size', '=', 'product_orders.product_size');
         })
+        ->leftJoin('orders', 'product_orders.order_id', '=', 'orders.id')
         ->select(
-            'product_details.id', // Include the non-aggregated columns in the SELECT
+            'product_details.id',
             'product_details.product_id',
             'product_details.size',
-            'product_details.quantity', // Assuming this is a column in product_details table
-            DB::raw('COALESCE(SUM(product_orders.product_quantity), 0) as total_quantity_sold')
+            'product_details.quantity',
+            DB::raw('COALESCE(SUM(CASE WHEN orders.status = "Xác nhận" THEN product_orders.product_quantity ELSE 0 END), 0) as total_quantity_sold')
         )
+        // Chỉ lấy các đơn hàng đã xác nhận
         ->groupBy('product_details.id', 'product_details.product_id', 'product_details.size', 'product_details.quantity')
         ->get();
+
         return view('admin.warehouse.index', compact('products'));
         // return view('admin.warehouse.index');
     }

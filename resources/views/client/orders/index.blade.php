@@ -22,7 +22,7 @@
                     <th>customer_address</th>
                     <th>note</th>
                     <th>payment</th>
-
+                    <th>Hành động</th>
 
                 </tr>
 
@@ -30,6 +30,7 @@
                 <tr>
                     <td>{{ $item->id }}</td>
 
+                    {{-- <td>{{ $item->status }}</td> --}}
                     <td>{{ $item->status }}</td>
                     <td>{{number_format($item->total)  }}VNĐ</td>
 
@@ -41,12 +42,11 @@
                     <td>{{ $item->note }}</td>
                     <td>{{ $item->payment }}</td>
                     <td>
-                        @if ($item->status == 'pending')
+                        @if ($item->status == 'Chờ xác nhận')
                         <form action="{{ route('client.orders.cancel', $item->id) }}" id="form-cancel{{ $item->id }}"
                             method="post">
                             @csrf
-                            <button class="btn btn-cancel btn-danger" data-id={{ $item->id }}>Cancle
-                                Order</button>
+                            <button class="btn btn-cancel btn-danger" data-id={{ $item->id }}>Hủy đơn hàng</button>
                         </form>
                         @endif
 

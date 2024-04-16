@@ -9,14 +9,14 @@ class PaymentController extends Controller
     public function vnpay_payment(){
 
 $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-$vnp_Returnurl = "https://localhost/vnpay_php/vnpay_return.php";
+$vnp_Returnurl = "http://127.0.0.1:8000/carts";
 $vnp_TmnCode = "D3F2BAS3";//Mã website tại VNPAY 
 $vnp_HashSecret = "QKESBEHPQEZTUEEMFTOODWUIVCBGIZPX"; //Chuỗi bí mật
 
-$vnp_TxnRef ="10000000"; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+$vnp_TxnRef = "10000356"; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
 $vnp_OrderInfo = "Thanh toán hóa đơn";
 $vnp_OrderType = "Barber Shop";
-$vnp_Amount = 10000 * 100;
+$vnp_Amount = 1000000 * 100;
 $vnp_Locale = "VN";
 $vnp_BankCode ="NCB";
 $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
