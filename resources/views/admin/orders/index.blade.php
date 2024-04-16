@@ -16,7 +16,7 @@
                          <th>#</th>
                          <th>Trạng thái</th>
                          <th>Tổng</th>
-                         {{-- <th>Phí vận chuyển</th> --}}
+                         <th>Phí vận chuyển</th>
                          <th>Tên KH</th>
                          <th>Email KH</th>
                          <th>Địa chỉ</th>
@@ -24,7 +24,7 @@
                          <th>Thanh toán</th>
                          <th>Ngày tạo</th>
                          <th>Ngày nhận</th>
-                         <th>Hành động</th>
+
                      </tr>
 
                      @foreach ($orders as $item)
@@ -45,7 +45,7 @@
                          </td>
                          <td>{{ number_format($item->total) }}VNĐ</td>
 
-                         {{-- <td>{{ $item->ship }}VNĐ</td> --}}
+                         <td>{{ $item->ship }}VNĐ</td>
                          <td>{{ $item->customer_name }}</td>
                          <td>{{ $item->customer_email }}</td>
 
@@ -60,7 +60,7 @@
                      </tr>
                      @endforeach
                  </table>
-                 {{ $orders->links('pagination::bootstrap-5') }}
+
              </div>
          </div>
 

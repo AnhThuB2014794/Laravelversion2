@@ -9,7 +9,7 @@
                 <h4 class="font-weight-semi-bold mb-4">Billing Address</h4>
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <label>Tên</label>
+                        <label>Name</label>
                         <input class="form-control" value="{{ old('customer_name') }}" name="customer_name" type="text"
                             placeholder="John">
                         @error('customer_name')
@@ -27,7 +27,7 @@
                         @enderror ()
                     </div>
                     <div class="col-md-6 form-group">
-                        <label>Số điện thoại</label>
+                        <label>Mobile No</label>
                         <input class="form-control" name="customer_phone" value="{{ old('customer_phone') }}"
                             type="text" placeholder="+123 456 789">
                         @error('customer_phone')
@@ -35,7 +35,7 @@
                         @enderror ()
                     </div>
                     <div class="col-md-6 form-group">
-                        <label>Địa chỉ </label>
+                        <label>Address </label>
                         <input class="form-control" name="customer_address" value="{{ old('customer_address') }}"
                             type="text" placeholder="123 Street">
                         @error('customer_address')
@@ -43,7 +43,7 @@
                         @enderror ()
                     </div>
                     <div class="col-md-6 form-group">
-                        <label>Ghi chú </label>
+                        <label>Note </label>
                         <input class="form-control" value="{{ old('note') }}" name="note" type="text"
                             placeholder="123 Street">
                         @error('note')
@@ -111,36 +111,41 @@
             <div class="card border-secondary mb-5">
                 <div class="card-header bg-secondary border-0">
                     <h4 class="font-weight-semi-bold m-0">Phương thức thanh toán</h4>
-                    <div class="select-button">
-                        <form action="{{route('payment.vnpay')}}" method="POST">
-                            @csrf
-                            <button type="submit" name="redirect" class="primary-btn checkout-btn"
-                                style="width: 100%;">Thanh toan VnPay</button>
-                        </form>
-                    </div>
                 </div>
-
-                <!-- <div class="card-body">
-                    <div class="form-group">
-                        <div class="payment-options">
-                            <label for="payment-cash">
-                                <input type="radio" id="payment-cash" name="payment" value="Tiền mặt">
-                                <span>Thanh toán bằng tiền mặt</span>
-                            </label>
-                            <label for="payment-card">
-                                <input type="radio" id="payment-card" name="payment" value="Thẻ">
-                                <span>Thanh toán bằng thẻ tín dụng</span>
-                            </label>
-                        </div>
-                    </div>
-
-                </div> -->
-                <!-- <div class="card-footer border-secondary bg-transparent">
+                <div class="payment-options">
+                    <label for="payment-cash">
+                        <input type="radio" id="payment-cash" name="payment" value="Thanh toán khi nhận hàng">
+                        <span>Thanh toán bằng tiền mặt</span>
+                    </label>
+                    <label for="payment-card">
+                        <input type="radio" id="payment-card" name="payment" value="Thanh toán online">
+                        <span>Thanh toán bằng thẻ tín dụng</span>
+                    </label>
+                </div>
+                <div class="card-footer border-secondary bg-transparent">
                     <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Đặt hàng</button>
-                </div> -->
+                </div>
             </div>
+
         </div>
+
+
+</div>
+
+</div>
+</div>
+</form>
+<div class="form-container card-footer border-secondary bg-transparent">
+    <form action="{{ url('vnpay_payment') }}" method="POST">
+        @csrf
+
+        <button type="submit" name="redirect" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3"
+            style="width:100%">Thanh toán
+            VnPay</button>
     </form>
+</div>
+
+
 </div>
 @endsection
 @section('script')
@@ -154,7 +159,7 @@ $(function() {
         let total = $('.total-price').data('price')
         let couponPrice = $('.coupon-div')?.data('price') ?? 0;
         let shiping = $('.shipping').data('price')
-        // $('.total-price-all').text(`${total + shiping - couponPrice}VNĐ`)
+        $('.total-price-all').text(`${total + shiping - couponPrice}VNĐ`)
         $('#total').val(total + shiping - couponPrice)
         var totalPrice = total + shiping - couponPrice;
 

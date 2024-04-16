@@ -4,9 +4,9 @@
             <div class="d-inline-flex align-items-center">
                 <a class="text-dark" href="">FAQs</a>
                 <span class="text-muted px-2">|</span>
-                <a class="text-dark" href="">Help</a>
+                <a class="text-dark" href="">Trợ giúp</a>
                 <span class="text-muted px-2">|</span>
-                <a class="text-dark" href="">Support</a>
+                <a class="text-dark" href="">Hỗ trợ</a>
             </div>
         </div>
         <div class="col-lg-6 text-center text-lg-right">

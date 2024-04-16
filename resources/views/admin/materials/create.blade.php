@@ -2,7 +2,7 @@
 @section('title','Create Import Product')
 @section('content')
 <div class="card">
-    <h1>Create Import Material</h1>
+    <h1>Nhập sản phẩm vào kho</h1>
 
     <div>
         <form action="{{route('materials.store') }}" method="post" id="createForm" enctype="multipart/form-data">
