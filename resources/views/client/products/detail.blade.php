@@ -83,7 +83,7 @@
                             <i class="fa fa-minus"></i>
                         </button>
                     </div>
-                    <input type="text" class="form-control bg-secondary text-center" value="1" readonly  >
+                    <input type="number" class="form-control bg-secondary text-center" value="1" readonly  >
                     <div class="input-group-btn">
                         <button class="btn btn-primary btn-plus">
                             <i class="fa fa-plus"></i>
@@ -182,4 +182,20 @@
 </div>
 
 
+@endsection
+@section('script')
+$('.quantity button').on('click', function () {
+    var button = $(this);
+    var oldValue = button.parent().parent().find('input').val();
+    if (button.hasClass('btn-plus')) {
+        var newVal = parseFloat(oldValue) + 1;
+    } else {
+        if (oldValue > 0) {
+            var newVal = parseFloat(oldValue) - 1;
+        } else {
+            newVal = 0;
+        }
+    }
+    button.parent().parent().find('input').val(newVal);
+});
 @endsection

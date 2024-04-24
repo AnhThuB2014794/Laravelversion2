@@ -138,7 +138,7 @@
 
                 </div>
                 <div class="card-footer border-secondary bg-transparent">
-                    <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Đặt hàng</button>
+                    <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3" name="redirect">Đặt hàng</button>
                 </div>
             </div>
         </div>

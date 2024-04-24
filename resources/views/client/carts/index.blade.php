@@ -52,7 +52,8 @@
                                 </button>
                             </div>
                             <input type="number" class="form-control form-control-sm bg-secondary text-center p-0"
-                                id="productQuantityInput-{{ $item->id }}" min="1" value="{{ $item->product_quantity }}" readonly>
+                                id="productQuantityInput-{{ $item->id }}" min="1" 
+                                value="{{ $item->product_quantity }}" >
                             <div class="input-group-btn">
                                 <button class="btn btn-sm btn-primary btn-plus btn-update-quantity"
                                     data-action="{{ route('client.carts.update_product_quantity', $item->id) }}"
@@ -64,7 +65,8 @@
                     </td>
                     <td class="align-middle">
                         <span
-                            id="cartProductPrice{{ $item->id }}">{{ number_format($item->product->sale ? $item->product->sale_price * $item->product_quantity : $item->product->price * $item->product_quantity) }}
+                            id="cartProductPrice{{ $item->id }}">
+                            {{ number_format($item->product->sale ? $item->product->sale_price * $item->product_quantity : $item->product->price * $item->product_quantity) }}
                             VNĐ</span>
 
                     </td>
@@ -92,11 +94,11 @@
         </form>
         <div class="card border-secondary mb-5">
             <div class="card-header bg-secondary border-0">
-                <h4 class="font-weight-semi-bold m-0">Cart Summary</h4>
+                <h4 class="font-weight-semi-bold m-0">Tóm tắt giỏ hàng</h4>
             </div>
             <div class="card-body">
                 <div class="d-flex justify-content-between mb-3 pt-1">
-                    <h6 class="font-weight-medium">Subtotal</h6>
+                    <h6 class="font-weight-medium">Tổng phụ</h6>
                     <h6 class="font-weight-medium total-price" data-price="{{ $cart->total_price }}">
                         {{number_format($cart->total_price ) }} VNĐ</h6>
                 </div>
@@ -125,33 +127,47 @@
 @endsection
 @section('script')
 <script>
+    $('.quantity button').on('click', function () {
+        var button = $(this);
+        var oldValue = button.parent().parent().find('input').val();
+        if (button.hasClass('btn-plus')) {
+            var newVal = parseFloat(oldValue) + 1;
+        } else {
+            if (oldValue > 0) {
+                var newVal = parseFloat(oldValue) - 1;
+            } else {
+                newVal = 0;
+            }
+        }
+        button.parent().parent().find('input').val(newVal);
+    });
     $(function () {
-    getTotalValue();
+        getTotalValue();
 
-    function getTotalValue() {
-        let total = $(".total-price").data("price");
-        let couponPrice = $(".coupon-div")?.data("price") ?? 0;
-        // $(".total-price-all").text(`${total - couponPrice} VNĐ`);
-        var totalPrice = total - couponPrice;
+        function getTotalValue() {
+            let total = $('.total-price').data('price');
+            let couponPrice = $('.coupon-div')?.data('price') ?? 0;
+            // $('.total-price-all').text(`${total - couponPrice} VNĐ`);
+            var totalPrice = total - couponPrice;
 
-        // Định dạng giá trị tiền tệ với dấu ngăn cách
-        var formattedTotalPrice = totalPrice.toLocaleString('vi-VN');
+            // Định dạng giá trị tiền tệ với dấu ngăn cách
+            var formattedTotalPrice = totalPrice.toLocaleString('vi-VN');
 
-        // Thay đổi nội dung của phần tử có class "total-price-all" thành giá trị tiền tệ đã định dạng
-        $(".total-price-all").text(`${formattedTotalPrice}VNĐ`);
-    }
+            // Thay đổi nội dung của phần tử có class "total-price-all" thành giá trị tiền tệ đã định dạng
+            $('.total-price-all').text(`${formattedTotalPrice}VNĐ`);
+        }
 
-    $(document).on("click", ".btn-remove-product", function (e) {
-        let url = $(this).data("action");
+    $(document).on('click', '.btn-remove-product', function (e) {
+        let url = $(this).data('action');
         confirmDelete()
             .then(function () {
-                $.post(url, (res) => {
+                $.post(url, res => {
                     let cart = res.cart;
                     let cartProductId = res.product_cart_id;
-                    $("#productCountCart").text(cart.product_count);
-                    $(".total-price")
-                        .text(`$${cart.total_price}`)
-                        .data("price", cart.product_count);
+                    $('#productCountCart').text(cart.product_count);
+                    $('.total-price')
+                        .text(`${cart.total_price}`)
+                        .data('price', cart.product_count);
                     $(`#row-${cartProductId}`).remove();
                     getTotalValue();
                 });
@@ -162,18 +178,18 @@
     const TIME_TO_UPDATE = 1000;
 
     $(document).on(
-        "click",
-        ".btn-update-quantity",
+        'click',
+        '.btn-update-quantity',
         _.debounce(function (e) {
-            let url = $(this).data("action");
-            let id = $(this).data("id");
+            let url = $(this).data('action');
+            let id = $(this).data('id');
             let data = {
                 product_quantity: $(`#productQuantityInput-${id}`).val(),
             };
-            $.post(url, data, (res) => {
+            $.post(url, data, res => {
                 let cartProductId = res.product_cart_id;
                 let cart = res.cart;
-                $("#productCountCart").text(cart.product_count);
+                $('#productCountCart').text(cart.product_count);
                 if (res.remove_product) {
                     $(`#row-${cartProductId}`).remove();
                 } else {
@@ -182,12 +198,16 @@
                     );
                 }
                 getTotalValue();
-                cartProductPrice;
-                $(".total-price").text(`$${cart.total_price}`);
+                
+                // cartProductPrice
+                // getTotalValue();
+                $('.total-price').text(`${cart.total_price}VNĐ`);
+                // getTotalValue();
+                // $('.total-price-all').text(`${formattedTotalPrice}VNĐ`);
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
-                    title: "success",
+                    title: "Cập nhật thành công",
                     showConfirmButton: false,
                     timer: 1500,
                 });
