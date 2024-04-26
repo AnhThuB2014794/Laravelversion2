@@ -41,7 +41,9 @@ class DashboardController extends Controller
         $productCount = $this->product->count();
         $couponCount = $this->coupon->count();
         $roleCount = $this->role->count();
-
+        $orderComplete  = DB::table('orders')
+        ->where('status', 'Xác nhận')
+        ->count();
         //hiện thống kê lợi nhuận 
         $selectedMonth = $request->input('selected_month', now()->month);
         // $totalInputCost = DB::table('import_materials')
@@ -56,6 +58,7 @@ class DashboardController extends Controller
         ->whereMonth('import_materials.import_date', $selectedMonth)
         ->sum(DB::raw('import_materials.import_quantity * import_price'));
         $totalOrderPrice = DB::table('orders')
+        ->where('status', 'Xác nhận')
         ->whereMonth('updated_at', $selectedMonth)
         ->sum('total');
         // $monthlyRevenue = DB::table('orders')
@@ -65,16 +68,19 @@ class DashboardController extends Controller
         $startDate = $request->input('start_date', now()->subMonth()->format('Y-m-d'));
         $endDate = $request->input('end_date', now()->format('Y-m-d'));
         $statisticData = Order::selectRaw('DATE(created_at) as date, COUNT(*) as order_count, SUM(total) as total_revenue')
+        ->where('status', 'Xác nhận')
             ->whereBetween('created_at', [$startDate, $endDate])
             ->groupBy('date')
             ->orderBy('date')
             ->get();
         $totalRevenue = DB::table('orders')
+            ->where('status', 'Xác nhận')
             ->whereBetween('created_at', [$startDate, $endDate])
             ->sum('total');
         $totalOrder = DB::table('orders')
+        ->where('status', 'Xác nhận')
             ->whereBetween('created_at', [$startDate, $endDate])
             ->count();
-        return view('admin.dashboard.index', compact('userCount', 'categoryCount', 'productCount', 'orderCount', 'couponCount', 'roleCount','startDate','endDate','statisticData','totalRevenue', 'totalOrder', 'selectedMonth', 'totalImport', 'totalOrderPrice'));
+        return view('admin.dashboard.index', compact('userCount', 'categoryCount', 'productCount', 'orderCount', 'couponCount', 'roleCount','orderComplete','startDate','endDate','statisticData','totalRevenue', 'totalOrder', 'selectedMonth', 'totalImport', 'totalOrderPrice'));
     }
 }

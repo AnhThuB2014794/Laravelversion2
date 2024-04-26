@@ -49,32 +49,37 @@ class MaterialController extends Controller
         //     'import_price' => 'required|numeric',
         // ]);
    
-        $validator = FacadesValidator::make($request->all(), [
-            'import_quantity' => 'required|numeric',
-        ]);
+        // $validator = FacadesValidator::make($request->all(), [
+        //     'import_quantity' => 'required|numeric',
+        // ]);
         // Lấy tổng số lượng từ bảng product_detail
-        $validator->after(function ($validator) use ($request) {
-            $productId = $request->product_id;
-            $totalQuantity = ProductDetail::where('product_id', $productId)->sum('quantity');
-            if ($request->import_quantity != $totalQuantity) {
-                $validator->errors()->add('import_quantity', 'Số lượng nhập vào không khớp với tổng số lượng sản phẩm.');
-            }
-        });
-        if ($validator->fails()) {
-            return redirect()->back()
-                        ->withErrors($validator)
-                        ->withInput();
-        }
-        else
-        {
-            ImportMaterial::create([
-                'product_id' => $request->product_id,
-                'import_quantity' => $request->import_quantity,
-                'import_price' => $request->import_price,
-                'import_date' => $request->import_date
-            ]);
+        // $validator->after(function ($validator) use ($request) {
+        //     $productId = $request->product_id;
+        //     $totalQuantity = ProductDetail::where('product_id', $productId)->sum('quantity');
+        //     if ($request->import_quantity != $totalQuantity) {
+        //         $validator->errors()->add('import_quantity', 'Số lượng nhập vào không khớp với tổng số lượng sản phẩm.');
+        //     }
+        // });
+        // if ($validator->fails()) {
+        //     return redirect()->back()
+        //                 ->withErrors($validator)
+        //                 ->withInput();
+        // }
+        // else
+        // {
+            // ImportMaterial::create([
+            //     'product_id' => $request->product_id,
+            //     'supplier' => $request->supplier,
+            //     'import_quantity' => $request->import_quantity,
+            //     'import_price' => $request->import_price,
+            //     'import_date' => $request->import_date,
+                
+            // ]);
+            $dataCreate = $request->all();
+
+            $category = $this->importmaterial->create($dataCreate);
         return redirect()->route('materials.index')->with(['message' => 'Tạo sản phẩm nhập vào thành công']);
-        }
+        // }
     }
 
     /**

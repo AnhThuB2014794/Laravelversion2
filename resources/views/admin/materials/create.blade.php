@@ -24,6 +24,13 @@
                 @enderror
             </div>
 
+            <div class="input-group input-group-static mb-4">
+                <label>Nhà cung cấp sản phẩm</label>
+                <input type="text"  value="{{ old('supplier') }}" name="supplier" class="form-control">
+                @error('supplier')
+                    <span class="text-danger"> {{ $message }}</span>
+                @enderror
+            </div>
 
             <div class="input-group input-group-static mb-4">
                 <label>Số lượng nhập vào</label>

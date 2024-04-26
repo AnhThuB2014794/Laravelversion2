@@ -2,8 +2,7 @@
 @section('title','Update Import Product')
 @section('content')
 <div class="card">
-    <h1>Create Import Material</h1>
-
+    <h1>Update Import Material</h1>
     <div>
         <form action="{{route('materials.update', $importMaterial->id) }}" method="post" >
             @csrf

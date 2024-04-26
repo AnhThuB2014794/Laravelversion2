@@ -15,6 +15,7 @@
             <tr>
                 <th>#</th>
                 <th>Tên</th>
+                <th>Ngày cung cấp</th>
                 <th>Số lượng nhập vào</th>
                 <th>Giá nhập</th>
                 <th>Ngày nhập vào</th>
@@ -24,6 +25,7 @@
             <tr>
                 <td>{{ $item->id }}</td>
                 <td>{{ $item->product->name }}</td>
+                <td>{{ $item->supplier }}</td>
                 <td>{{ $item->import_quantity }}</td>
                 <td>{{ $item->import_price }}</td>
                 <td>{{ $item->import_date }}</td>

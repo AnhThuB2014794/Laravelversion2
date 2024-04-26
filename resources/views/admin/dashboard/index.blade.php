@@ -82,6 +82,24 @@
 
     </div>
 </div>
+
+{{-- đơn hàng đã xác nhuận --}}
+<div class="col-xl-3 col-sm-6 mt-4">
+    <div class="card">
+        <div class="card-header p-3 pt-2">
+            <div
+                class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 position-absolute">
+                <i class="material-icons opacity-10">weekend</i>
+            </div>
+            <div class="text-end pt-1">
+                <p class="text-sm mb-0 text-capitalize">Đơn hàng đã xác nhận </p>
+                <h4 class="mb-0">{{$orderComplete}}</h4>
+            </div>
+        </div>
+        <hr class="dark horizontal my-0">
+
+    </div>
+</div>
 <div class="container">
     <h3>Thống kê lợi nhuận theo tháng</h3>
   

@@ -12,7 +12,8 @@ class ImportMaterial extends Model
         'import_price',
         'product_id',
         'import_quantity',
-        'import_date'
+        'import_date', 
+        'supplier'
     ];
     public function product()
     {
