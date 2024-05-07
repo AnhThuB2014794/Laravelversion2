@@ -46,24 +46,18 @@ class DashboardController extends Controller
         ->count();
         //hiện thống kê lợi nhuận 
         $selectedMonth = $request->input('selected_month', now()->month);
-        // $totalInputCost = DB::table('import_materials')
-        // ->join('materials', 'import_materials.material_id', '=', 'materials.id')
-        // ->whereMonth('import_materials.import_date', $selectedMonth)
-        // ->sum(DB::raw('import_materials.quantity_entered * materials.price'));
-        // $totalExportCost = DB::table('export_materials')
-        // ->join('materials', 'export_materials.material_id', '=', 'materials.id')
-        // ->whereMonth('export_materials.export_date', $selectedMonth)
-        // ->sum(DB::raw('export_materials.export_quantity * materials.price'));
+      
         $totalImport = DB::table('import_materials')
         ->whereMonth('import_materials.import_date', $selectedMonth)
         ->sum(DB::raw('import_materials.import_quantity * import_price'));
-        $totalOrderPrice = DB::table('orders')
-        ->where('status', 'Xác nhận')
-        ->whereMonth('updated_at', $selectedMonth)
-        ->sum('total');
-        // $monthlyRevenue = DB::table('orders')
-        // ->whereMonth('created_at', $selectedMonth)
-        // ->sum('total');
+       
+        
+        $totalOrderPrice = DB::table('product_orders')
+        ->join('orders', 'product_orders.order_id', '=', 'orders.id')
+        ->where('orders.status', 'Xác nhận')
+        ->whereMonth('orders.created_at', $selectedMonth)
+        ->sum(DB::raw('product_orders.product_quantity * product_orders.product_price'));
+       
         //hiện doanh thu theo hóa đơn
         $startDate = $request->input('start_date', now()->subMonth()->format('Y-m-d'));
         $endDate = $request->input('end_date', now()->format('Y-m-d'));

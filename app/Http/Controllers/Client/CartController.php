@@ -41,8 +41,8 @@ class CartController extends Controller
     public function index()
     {
         $cart = $this->cart->firtOrCreateBy(auth()->user()->id)->load('products');
-
-        return view('client.carts.index', compact('cart'));
+        $coupons = Coupon::all();
+        return view('client.carts.index', compact('cart','coupons'));
 
     }
 

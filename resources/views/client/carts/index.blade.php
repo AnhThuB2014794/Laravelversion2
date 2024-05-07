@@ -86,9 +86,49 @@
             @csrf
             <div class="input-group">
                 <input type="text" class="form-control p-4" value="{{ Session::get('coupon_code') }}" name="coupon_code"
-                    placeholder="Coupon Code">
+                    placeholder="Mã giảm giá">
                 <div class="input-group-append">
                     <button class="btn btn-primary">Áp dụng mã giảm giá</button>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#discountCodesModal" style="padding: 10px; margin: 10px">
+                Xem danh sách mã giảm giá
+            </button>
+            <div class="modal fade" id="discountCodesModal" tabindex="-1" role="dialog" aria-labelledby="discountCodesModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="discountCodesModalLabel">Danh sách mã giảm giá <sup>(*)</sup>
+                                
+                            </h5> 
+                                                          
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            
+                        </div>
+                        <div>
+                            <i>                                   
+                                (*Vui lòng xem danh sách mã giảm giá tại đây và nhập mã giảm giá vào ô mã giảm đã để nhận được khuyến mãi.) 
+                            </i>
+                        </div> 
+                        
+                        
+                        <div class="modal-body">
+                            <!-- Hiển thị danh sách mã giảm giá -->
+                            <ul>
+                                @foreach($coupons as $coupon)
+                                    <li class="discount-code" data-code="{{ $coupon->name }}">
+                                        {{ $coupon->name }} - {{ $coupon->value }} VNĐ
+                                        
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>

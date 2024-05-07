@@ -18,12 +18,12 @@
                          <th>Tổng</th>
                          {{-- <th>Phí vận chuyển</th> --}}
                          <th>Tên KH</th>
-                         <th>Email KH</th>
+                         {{-- <th>Email KH</th> --}}
                          <th>Địa chỉ</th>
                          <th>Ghi chú</th>
                          <th>Thanh toán</th>
-                         <th>Ngày tạo</th>
-                         <th>Ngày nhận</th>
+                         <th>Ngày tạo đơn hàng </th>
+                         <th>Ngày xác nhận </th>
                          <th>Hành động</th>
                      </tr>
 
@@ -47,7 +47,7 @@
 
                          {{-- <td>{{ $item->ship }}VNĐ</td> --}}
                          <td>{{ $item->customer_name }}</td>
-                         <td>{{ $item->customer_email }}</td>
+                         {{-- <td>{{ $item->customer_email }}</td> --}}
 
                          <td>{{ $item->customer_address }}</td>
                          <td>{{ $item->note }}</td>
