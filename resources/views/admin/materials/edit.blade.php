@@ -25,7 +25,7 @@
 
             <div class="input-group input-group-static mb-4">
                 <label>Nhà cung cấp</label>
-                <input type="text"  value="{{ old('supplier') ?? $importMaterial->supplier  }}" name="import_quantity" class="form-control">
+                <input type="text"  value="{{ old('supplier') ?? $importMaterial->supplier  }}" name="supplier" class="form-control">
                 @error('supplier')
                     <span class="text-danger"> {{ $message }}</span>
                 @enderror

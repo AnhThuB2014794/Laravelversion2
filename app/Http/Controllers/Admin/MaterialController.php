@@ -128,6 +128,7 @@ class MaterialController extends Controller
         $importMaterial->product_id = $request->input('product_id');
         $importMaterial->import_price = $request->input('import_price');
         $importMaterial->import_quantity = $request->input('import_quantity');
+        $importMaterial->supplier = $request->input('supplier');
         $importMaterial->import_date = $request->input('import_date');
         
         $importMaterial->save();
