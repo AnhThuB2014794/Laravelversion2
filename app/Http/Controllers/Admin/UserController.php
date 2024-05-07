@@ -69,7 +69,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, string $id)
+    public function update(Request $request, string $id)
     {
         $dataUpdate = $request->except('password');
         $user = $this->user->findOrFail($id)->load('roles');

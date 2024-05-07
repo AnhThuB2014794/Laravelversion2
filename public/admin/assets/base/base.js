@@ -8,6 +8,7 @@ function confirmDelete() {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Chắc chắn, hãy xóa chúng!",
+            cancelButtonText: "Hủy",
         }).then((result) => {
             if (result.isConfirmed) {
                 resolve(true);

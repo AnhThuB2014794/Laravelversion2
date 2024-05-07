@@ -26,8 +26,8 @@
             <div class="input-group input-group-static mb4">
                 <label name="group" class="ms-0">Nhóm</label>
                 <select name="group" class="form-control">
-                    <option value="system">Hệ thống</option>
-                    <option value="user">Người dùng</option>
+                    <option value="Quản trị">Quản Trị</option>
+                    <option value="Khách hàng">Khách hàng</option>
                 </select>
 
                 @error('group')

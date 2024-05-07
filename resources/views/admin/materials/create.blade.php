@@ -24,19 +24,18 @@
                 @enderror
             </div>
 
-
             <div class="input-group input-group-static mb-4">
-                <label>Số lượng nhập vào</label>
-                <input type="number" value="{{ old('import_quantity') }}" name="import_quantity" class="form-control">
-                @error('import_quantity')
+                <label>Nhà cung cấp sản phẩm</label>
+                <input type="text" value="{{ old('import_ncc') }}" name="import_ncc" class="form-control">
+                @error('import_ncc')
                 <span class="text-danger"> {{ $message }}</span>
                 @enderror
             </div>
 
             <div class="input-group input-group-static mb-4">
-                <label>Nhà cung cấp</label>
-                <input type="text" value="{{ old('import_ncc') }}" name="import_ncc" class="form-control">
-                @error('import_ncc')
+                <label>Số lượng nhập vào</label>
+                <input type="number" value="{{ old('import_quantity') }}" name="import_quantity" class="form-control">
+                @error('import_quantity')
                 <span class="text-danger"> {{ $message }}</span>
                 @enderror
             </div>
@@ -64,7 +63,7 @@
 
     </div>
 
-    <button type="submit" class="btn btn-submit btn-primary">Submit</button>
+    <button type="submit" class="btn btn-submit btn-primary">Lưu lại</button>
     </form>
 </div>
 </div>

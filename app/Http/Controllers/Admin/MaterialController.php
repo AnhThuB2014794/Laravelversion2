@@ -69,11 +69,12 @@ class MaterialController extends Controller
         {
             ImportMaterial::create([
                 'product_id' => $request->product_id,
+                'import_ncc' => $request->import_ncc,
                 'import_quantity' => $request->import_quantity,
                 'import_price' => $request->import_price,
                 'import_date' => $request->import_date,
-                'import_ncc' => $request->import_ncc
             ]);
+            
         return redirect()->route('materials.index')->with(['message' => 'Tạo sản phẩm nhập vào thành công']);
         }
     }

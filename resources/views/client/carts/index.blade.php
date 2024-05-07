@@ -51,8 +51,10 @@
                                     <i class="fa fa-minus"></i>
                                 </button>
                             </div>
+
                             <input type="number" class="form-control form-control-sm bg-secondary text-center p-0"
-                                id="productQuantityInput-{{ $item->id }}" min="1" value="{{ $item->product_quantity }}">
+                                id="productQuantityInput-{{ $item->id }}" min="1" value="{{ $item->product_quantity }}"
+                                readonly>
                             <div class="input-group-btn">
                                 <button class="btn btn-sm btn-primary btn-plus btn-update-quantity"
                                     data-action="{{ route('client.carts.update_product_quantity', $item->id) }}"
@@ -63,8 +65,8 @@
                         </div>
                     </td>
                     <td class="align-middle">
-                        <span
-                            id="cartProductPrice{{ $item->id }}">{{ number_format($item->product->sale ? $item->product->sale_price * $item->product_quantity : $item->product->price * $item->product_quantity) }}
+                        <span id="cartProductPrice{{ $item->id }}">
+                            {{ number_format($item->product->sale ? $item->product->sale_price * $item->product_quantity : $item->product->price * $item->product_quantity) }}
                             VNĐ</span>
 
                     </td>
@@ -89,10 +91,53 @@
                     <button class="btn btn-primary">Áp dụng mã giảm giá</button>
                 </div>
             </div>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#discountCodesModal"
+                style="padding: 10px; margin: 10px">
+                Xem danh sách mã giảm giá
+            </button>
+            <div class="modal fade" id="discountCodesModal" tabindex="-1" role="dialog"
+                aria-labelledby="discountCodesModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="discountCodesModalLabel">Danh sách mã giảm giá <sup>(*)</sup>
+
+                            </h5>
+
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+
+                        </div>
+                        <div>
+                            <i>
+                                (*Vui lòng xem danh sách mã giảm giá tại đây và nhập mã giảm giá vào ô mã giảm đã để
+                                nhận được khuyến mãi.)
+                            </i>
+                        </div>
+
+
+                        <div class="modal-body">
+                            <!-- Hiển thị danh sách mã giảm giá -->
+                            <ul>
+                                @foreach($coupons as $coupon)
+                                <li class="discount-code" data-code="{{ $coupon->name }}">
+                                    {{ $coupon->name }} - {{ $coupon->value }} VNĐ
+
+                                </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </form>
         <div class="card border-secondary mb-5">
             <div class="card-header bg-secondary border-0">
-                <h4 class="font-weight-semi-bold m-0">Giỏ hàng </h4>
+                <h4 class="font-weight-semi-bold m-0">Tóm tắt giỏ hàng</h4>
             </div>
             <div class="card-body">
                 <div class="d-flex justify-content-between mb-3 pt-1">
@@ -123,5 +168,95 @@
 </div>
 @endsection
 @section('script')
-<script src="{{ asset('client/cart/cart.js') }}"></script>
+<script>
+$('.quantity button').on('click', function() {
+    var button = $(this);
+    var oldValue = button.parent().parent().find('input').val();
+    if (button.hasClass('btn-plus')) {
+        var newVal = parseFloat(oldValue) + 1;
+    } else {
+        if (oldValue > 0) {
+            var newVal = parseFloat(oldValue) - 1;
+        } else {
+            newVal = 0;
+        }
+    }
+    button.parent().parent().find('input').val(newVal);
+});
+$(function() {
+    getTotalValue();
+
+    function getTotalValue() {
+        let total = $('.total-price').data('price');
+        let couponPrice = $('.coupon-div')?.data('price') ?? 0;
+        // $('.total-price-all').text(`${total - couponPrice} VNĐ`);
+        var totalPrice = total - couponPrice;
+
+        // Định dạng giá trị tiền tệ với dấu ngăn cách
+        var formattedTotalPrice = totalPrice.toLocaleString('vi-VN');
+
+        // Thay đổi nội dung của phần tử có class "total-price-all" thành giá trị tiền tệ đã định dạng
+        $('.total-price-all').text(`${formattedTotalPrice}VNĐ`);
+    }
+
+    $(document).on('click', '.btn-remove-product', function(e) {
+        let url = $(this).data('action');
+        confirmDelete()
+            .then(function() {
+                $.post(url, res => {
+                    let cart = res.cart;
+                    let cartProductId = res.product_cart_id;
+                    $('#productCountCart').text(cart.product_count);
+                    $('.total-price')
+                        .text(`${cart.total_price}`)
+                        .data('price', cart.product_count);
+                    $(`#row-${cartProductId}`).remove();
+                    getTotalValue();
+                });
+            })
+            .catch(function() {});
+    });
+
+    const TIME_TO_UPDATE = 1000;
+
+    $(document).on(
+        'click',
+        '.btn-update-quantity',
+        _.debounce(function(e) {
+            let url = $(this).data('action');
+            let id = $(this).data('id');
+            let data = {
+                product_quantity: $(`#productQuantityInput-${id}`).val(),
+            };
+            $.post(url, data, res => {
+                let cartProductId = res.product_cart_id;
+                let cart = res.cart;
+                $('#productCountCart').text(cart.product_count);
+                if (res.remove_product) {
+                    $(`#row-${cartProductId}`).remove();
+                } else {
+                    $(`#cartProductPrice${cartProductId}`).html(
+                        `${res.cart_product_price}VNĐ`
+                    );
+                }
+                getTotalValue();
+
+                // cartProductPrice
+                // getTotalValue();
+                $('.total-price').text(`${cart.total_price}VNĐ`);
+                // getTotalValue();
+                // $('.total-price-all').text(`${formattedTotalPrice}VNĐ`);
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Cập nhật thành công",
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+            });
+        }, TIME_TO_UPDATE)
+    );
+});
+</script>
+{{-- <script src="{{ asset('client/cart/cart.js') }}"></script> --}}
 @endsection

@@ -4,7 +4,7 @@
 <!-- Page Header Start -->
 <div class="row" style="margin-left: 50px">
     <div class="d-inline-flex">
-        <p class="m-0"><a href="{{ route('client.home') }}">Trang chủ</a></p>
+        <p class="m-0"><a href="">Trang chủ</a></p>
         <p class="m-0 px-2">/</p>
         <p class="m-0">Chi tiết sản phẩm</p>
     </div>
@@ -44,6 +44,16 @@
 
             </div>
             <h3 class="font-weight-semi-bold mb-4">{{number_format( $product->price) }}VND</h3>
+            <h5>Số lượng hàng còn:</h5>
+            @foreach ($productDetails as $productDetail)
+            @php
+            // Tìm phần tử tương ứng trong $productOrders
+            $order = $productOrders->firstWhere('product_size', $productDetail->size);
+            // Tính số lượng còn lại
+            $quantityRemaining = $productDetail->remaining_quantity - ($order ? $order->quantity_sold : 0);
+            @endphp
+            <p>Size: {{ $productDetail->size }}: Số lượng còn lại: {{ $quantityRemaining }}</p>
+            @endforeach
 
 
             <div class="d-flex mb-4">
@@ -66,24 +76,43 @@
             </div>
 
 
-            <div class="d-flex align-items-center mb-4 pt-2">
+            <!-- <div class="d-flex align-items-center mb-4 pt-2">
                 <div class="input-group quantity mr-3" style="width: 130px;">
                     <div class="input-group-btn">
                         <button class="btn btn-primary btn-minus">
                             <i class="fa fa-minus"></i>
                         </button>
                     </div>
-                    <input type="text" class="form-control bg-secondary text-center" value="1">
+                    <input type="text" class="form-control bg-secondary text-center" value="1" readonly>
                     <div class="input-group-btn">
                         <button class="btn btn-primary btn-plus">
                             <i class="fa fa-plus"></i>
                         </button>
                     </div>
                 </div>
-                <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Thêm vào giỏ hàng</button>
+                <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
+            </div> -->
+            <div class="d-flex align-items-center mb-4 pt-2">
+                <!-- <div class="input-group quantity mr-3" style="width: 130px;">
+                    <div class="input-group-btn">
+                        <button class="btn btn-primary btn-minus">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <input type="number" class="form-control bg-secondary text-center" value="1" min="1"
+                        id="quantityInput">
+                    <div class="input-group-btn">
+                        <button class="btn btn-primary btn-plus">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                </div>q -->
+                <button class="btn btn-primary px-3" id="addToCartButton"><i class="fa fa-shopping-cart mr-1"></i> Thêm
+                    vào giỏ hàng</button>
             </div>
+
             <div class="d-flex pt-2">
-                <p class="text-dark font-weight-medium mb-0 mr-2">Share on:</p>
+                <p class="text-dark font-weight-medium mb-0 mr-2">Chia sẻ:</p>
                 <div class="d-inline-flex">
                     <a class="text-dark px-2" href="">
                         <i class="fab fa-facebook-f"></i>
@@ -105,11 +134,11 @@
         <div class="col">
             <div class="nav nav-tabs justify-content-center border-secondary mb-4">
                 <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Mô tả</a>
-                <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Phản hồi (0)</a>
+                <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Phản hồi(0)</a>
             </div>
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="tab-pane-1">
-                    <h4 class="mb-3">Mô tả sản phẩm</h4>
+                    <h4 class="mb-3">Mô tả về sản phẩm</h4>
                     {!! $product->description !!}
                 </div>
 
@@ -170,6 +199,13 @@
         </div>
     </div>
 </div>
+
+
+@endsection
+@section('script')
+
+<script src="{{ asset('client/js/product.js') }}"></script>
+
 
 
 @endsection

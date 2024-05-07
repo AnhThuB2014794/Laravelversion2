@@ -96,7 +96,7 @@
             </div>
 
             <div class="form-group">
-                <label for="quantities">Quantities</label>
+                <label for="quantities">Số lượng</label>
                 <input id="quantities" type="text" class="form-control" name="quantities"
                     value="{{ implode(',', $quantities) }}" required>
             </div>

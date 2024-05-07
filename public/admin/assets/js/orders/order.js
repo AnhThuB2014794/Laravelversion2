@@ -10,7 +10,7 @@ $(function () {
             Swal.fire({
                 position: "top-end",
                 icon: "success",
-                title: "success",
+                title: "Thành công",
                 showConfirmButton: false,
                 timer: 1500,
             });

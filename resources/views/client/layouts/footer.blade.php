@@ -13,31 +13,30 @@
         <div class="col-lg-8 col-md-12">
             <div class="row">
                 <div class="col-md-4 mb-5">
-                    <h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
+                    <h5 class="font-weight-bold text-dark mb-4">Đường dẫn</h5>
                     <div class="d-flex flex-column justify-content-start">
-                        <a class="text-dark mb-2" href=""><i class="fa fa-angle-right mr-2"></i>Home</a>
+                        <a class="text-dark mb-2" href=""><i class="fa fa-angle-right mr-2"></i>Trang chủ</a>
 
-                        <a class="text-dark mb-2" href="checkout.html"><i
-                                class="fa fa-angle-right mr-2"></i>Checkout</a>
-                        <a class="text-dark" href="contact.html"><i class="fa fa-angle-right mr-2"></i>Contact
-                            Us</a>
+                        <a class="text-dark mb-2" href="checkout.html"><i class="fa fa-angle-right mr-2"></i>Kiểm
+                            tra</a>
+                        <a class="text-dark" href="contact.html"><i class="fa fa-angle-right mr-2"></i>Chăm sóc khách
+                            hàng</a>
                     </div>
                 </div>
 
                 <div class="col-md-4 mb-5">
-                    <h5 class="font-weight-bold text-dark mb-4">Newsletter</h5>
+                    <h5 class="font-weight-bold text-dark mb-4">Bản Tin</h5>
                     <form action="">
                         <div class="form-group">
-                            <input type="text" class="form-control border-0 py-4" placeholder="Your Name"
+                            <input type="text" class="form-control border-0 py-4" placeholder="Tên khách hàng"
                                 required="required" />
                         </div>
                         <div class="form-group">
-                            <input type="email" class="form-control border-0 py-4" placeholder="Your Email"
+                            <input type="email" class="form-control border-0 py-4" placeholder="Email khách hàng"
                                 required="required" />
                         </div>
                         <div>
-                            <button class="btn btn-primary btn-block border-0 py-3" type="submit">Subscribe
-                                Now</button>
+                            <button class="btn btn-primary btn-block border-0 py-3" type="submit">Theo dõi ngay</button>
                         </div>
                     </form>
                 </div>
@@ -50,7 +49,7 @@
                 &copy; <a class="text-dark font-weight-semi-bold" href="#">My Shop</a>. All Rights Reserved.
                 Designed
                 by
-                <a class="text-dark font-weight-semi-bold" href="https://htmlcodex.com">My</a>
+                <a class="text-dark font-weight-semi-bold" href="https://htmlcodex.com">Nguyen Thu</a>
             </p>
         </div>
         <div class="col-md-6 px-xl-0 text-center text-md-right">

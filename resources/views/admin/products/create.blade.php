@@ -90,7 +90,7 @@
             </div>
 
             <div class="form-group">
-                <label for="quantities">Quantities</label>
+                <label for="quantities">Số lượng</label>
                 <input id="quantities" type="text" class="form-control" name="quantities"
                     placeholder="Vui lòng nhập số lượng sản phẩm tương ứng với các size (VD: 10,20,30,...)" required>
             </div>

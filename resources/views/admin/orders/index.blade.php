@@ -5,7 +5,7 @@
  <div class="card">
 
      <h1>
-         Orders
+         Đơn đặt hàng
      </h1>
      <div class="container-fluid pt-5">
 
@@ -16,15 +16,15 @@
                          <th>#</th>
                          <th>Trạng thái</th>
                          <th>Tổng</th>
-                         <th>Phí vận chuyển</th>
+                         <!-- <th>Phí vận chuyển</th> -->
                          <th>Tên KH</th>
-                         <th>Email KH</th>
+                         <!-- <th>Email KH</th> -->
                          <th>Địa chỉ</th>
                          <th>Ghi chú</th>
                          <th>Thanh toán</th>
-                         <th>Ngày tạo</th>
-                         <th>Ngày nhận</th>
-
+                         <th>Ngày tạo đơn hàng</th>
+                         <th>Ngày xác nhận</th>
+                         <th>Hành động</th>
                      </tr>
 
                      @foreach ($orders as $item)
@@ -45,9 +45,9 @@
                          </td>
                          <td>{{ number_format($item->total) }}VNĐ</td>
 
-                         <td>{{ $item->ship }}VNĐ</td>
+                         <!-- <td>{{ $item->ship }}VNĐ</td> -->
                          <td>{{ $item->customer_name }}</td>
-                         <td>{{ $item->customer_email }}</td>
+                         <!-- <td>{{ $item->customer_email }}</td> -->
 
                          <td>{{ $item->customer_address }}</td>
                          <td>{{ $item->note }}</td>

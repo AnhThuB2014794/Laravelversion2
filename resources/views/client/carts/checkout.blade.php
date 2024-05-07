@@ -6,12 +6,12 @@
         @csrf
         <div class="col-lg-8">
             <div class="mb-4">
-                <h4 class="font-weight-semi-bold mb-4">Billing Address</h4>
+                <h4 class="font-weight-semi-bold mb-4">Địa chỉ thanh toán</h4>
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <label>Name</label>
+                        <label>Tên</label>
                         <input class="form-control" value="{{ old('customer_name') }}" name="customer_name" type="text"
-                            placeholder="John">
+                            placeholder="Nguyen Van A">
                         @error('customer_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror ()
@@ -19,15 +19,15 @@
                     </div>
 
                     <div class="col-md-6 form-group">
-                        <label>E-mail</label>
+                        <label>Email</label>
                         <input class="form-control" name="customer_email" value="{{ old('customer_email') }}"
-                            type="text" placeholder="example@email.com">
+                            type="text" placeholder="vana@email.com">
                         @error('customer_email')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror ()
                     </div>
                     <div class="col-md-6 form-group">
-                        <label>Mobile No</label>
+                        <label>Số điện thoại</label>
                         <input class="form-control" name="customer_phone" value="{{ old('customer_phone') }}"
                             type="text" placeholder="+123 456 789">
                         @error('customer_phone')
@@ -35,17 +35,17 @@
                         @enderror ()
                     </div>
                     <div class="col-md-6 form-group">
-                        <label>Address </label>
+                        <label>Địa chỉ </label>
                         <input class="form-control" name="customer_address" value="{{ old('customer_address') }}"
-                            type="text" placeholder="123 Street">
+                            type="text" placeholder="Cần Thơ">
                         @error('customer_address')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror ()
                     </div>
                     <div class="col-md-6 form-group">
-                        <label>Note </label>
+                        <label>Ghi chú </label>
                         <input class="form-control" value="{{ old('note') }}" name="note" type="text"
-                            placeholder="123 Street">
+                            placeholder="Đường số 3">
                         @error('note')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror ()
@@ -112,39 +112,42 @@
                 <div class="card-header bg-secondary border-0">
                     <h4 class="font-weight-semi-bold m-0">Phương thức thanh toán</h4>
                 </div>
-                <div class="payment-options">
-                    <label for="payment-cash">
-                        <input type="radio" id="payment-cash" name="payment" value="Thanh toán khi nhận hàng">
-                        <span>Thanh toán bằng tiền mặt</span>
-                    </label>
-                    <label for="payment-card">
-                        <input type="radio" id="payment-card" name="payment" value="Thanh toán online">
-                        <span>Thanh toán bằng thẻ tín dụng</span>
-                    </label>
-                </div>
-                <div class="card-footer border-secondary bg-transparent">
-                    <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Đặt hàng</button>
-                </div>
-            </div>
-
+                <div class="card-body">
+                    <div class="form-group">
+                        {{--    <a href="" class="btn btn-success">Thanh toán khi nhận hàng</a>---}}
+                        <hr>
+                        {{-- <form action="{{ url('vnpay_payment') }}" method="POST">
+                        @csrf
+                        <button type="submit" name="redirect" class="primary-btn checkout-btn" style="width:100%">Thanh
+                            toán VnPay</button>
+    </form> --}}
+    <div class="form-group">
+        <div class="form-check">
+            <input type="radio" class="form-check-input" value="Tiền mặt" name="payment">
+            <label class="form-check-label">Thanh toán COD</label>
         </div>
 
 
+        <div class="form-check">
+            <input type="radio" class="form-check-input" value="VNPay" name="payment">
+            <label class="form-check-label">Thanh toán VNPay</label>
+        </div>
+    </div>
 </div>
 
+
+</div>
+<div class="card-footer border-secondary bg-transparent">
+    <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3" name="redirect">Đặt hàng</button>
+</div>
 </div>
 </div>
 </form>
-<div class="form-container card-footer border-secondary bg-transparent">
-    <form action="{{ url('vnpay_payment') }}" method="POST">
-        @csrf
 
-        <button type="submit" name="redirect" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3"
-            style="width:100%">Thanh toán
-            VnPay</button>
-    </form>
-</div>
-
+{{-- <form action="{{ url('vnpay_payment') }}" method="POST">
+@csrf
+<button type="submit" name="redirect" class="primary-btn checkout-btn" style="width:100%">Thanh toán VnPay</button>
+</form> --}}
 
 </div>
 @endsection

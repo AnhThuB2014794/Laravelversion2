@@ -18,7 +18,7 @@ class OrderController extends Controller
 
     public function index()
     {
-        // $orders =  $this->order->latest('id')->paginate(5);
+        // $orders =  $this->order->getWithPaginateBy(auth()->user()->id);
         $orders = Order::with('user')->orderBy('created_at', 'desc')->get();
         return view('admin.orders.index', compact('orders'));
     }
@@ -28,7 +28,7 @@ class OrderController extends Controller
         $order =  $this->order->findOrFail($id);
         $order->update(['status' => $request->status]);
         return  response()->json([
-            'message' => 'success'
+            'message' => 'Thành công'
         ], Response::HTTP_OK);
 
     }

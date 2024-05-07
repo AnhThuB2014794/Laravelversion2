@@ -41,7 +41,9 @@ class DashboardController extends Controller
         $productCount = $this->product->count();
         $couponCount = $this->coupon->count();
         $roleCount = $this->role->count();
-
+        $orderComplete  = DB::table('orders')
+        ->where('status', 'Xác nhận')
+        ->count();
         //hiện thống kê lợi nhuận 
         $selectedMonth = $request->input('selected_month', now()->month);
         // $totalInputCost = DB::table('import_materials')
@@ -55,9 +57,13 @@ class DashboardController extends Controller
         $totalImport = DB::table('import_materials')
         ->whereMonth('import_materials.import_date', $selectedMonth)
         ->sum(DB::raw('import_materials.import_quantity * import_price'));
-        $totalOrderPrice = DB::table('orders')
-        ->whereMonth('updated_at', $selectedMonth)
-        ->sum('total');
+        
+        
+        $totalOrderPrice = DB::table('product_orders')
+        ->join('orders', 'product_orders.order_id', '=', 'orders.id')
+        ->where('orders.status', 'Xác nhận')
+        ->whereMonth('orders.created_at', $selectedMonth)
+        ->sum(DB::raw('product_orders.product_quantity * product_orders.product_price'));
         // $monthlyRevenue = DB::table('orders')
         // ->whereMonth('created_at', $selectedMonth)
         // ->sum('total');
@@ -65,16 +71,19 @@ class DashboardController extends Controller
         $startDate = $request->input('start_date', now()->subMonth()->format('Y-m-d'));
         $endDate = $request->input('end_date', now()->format('Y-m-d'));
         $statisticData = Order::selectRaw('DATE(created_at) as date, COUNT(*) as order_count, SUM(total) as total_revenue')
+        ->where('status', 'Xác nhận')
             ->whereBetween('created_at', [$startDate, $endDate])
             ->groupBy('date')
             ->orderBy('date')
             ->get();
         $totalRevenue = DB::table('orders')
+            ->where('status', 'Xác nhận')
             ->whereBetween('created_at', [$startDate, $endDate])
             ->sum('total');
         $totalOrder = DB::table('orders')
+        ->where('status', 'Xác nhận')
             ->whereBetween('created_at', [$startDate, $endDate])
             ->count();
-        return view('admin.dashboard.index', compact('userCount', 'categoryCount', 'productCount', 'orderCount', 'couponCount', 'roleCount','startDate','endDate','statisticData','totalRevenue', 'totalOrder', 'selectedMonth', 'totalImport', 'totalOrderPrice'));
+        return view('admin.dashboard.index', compact('userCount', 'categoryCount', 'productCount', 'orderCount', 'couponCount', 'roleCount','orderComplete','startDate','endDate','statisticData','totalRevenue', 'totalOrder', 'selectedMonth', 'totalImport', 'totalOrderPrice'));
     }
 }
