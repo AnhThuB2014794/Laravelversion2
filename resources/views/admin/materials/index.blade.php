@@ -31,12 +31,12 @@
                 <td>{{ $item->import_date }}</td>
                 <td>
 
-                    {{-- @can('update-coupon') --}}
+                    @can('update-coupon')
                     <a href="{{ route('materials.edit', $item->id)}}" class="btn btn-success"><i
                             class="fa fa-edit"></i></a>
-                    {{-- @endcan --}}
+                    @endcan
 
-                    {{-- @can('delete-coupon'){{ route('coupons.destroy', $item->id) }} --}}
+                    @can('delete-coupon')
                     <form action="{{ route('materials.destroy', $item->id) }}" id="form-delete{{ $item->id}}"
                         method="post">
                         @csrf
@@ -45,7 +45,7 @@
                     </form>
                     <button class="btn btn-delete btn-danger" type="submit" data-id="{{ $item->id }}"><i
                             class="fa fa-trash"></i></button>
-                    {{-- @endcan --}}
+                    @endcan
 
 
                 </td>
