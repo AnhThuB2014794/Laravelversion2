@@ -29,7 +29,7 @@
                 <label name="group" class="ms-0">Loại</label>
                 <select name="type" class="form-control">
                     <option> Chọn Loại </option>
-                    <option value="money"> Tiền </option>
+                    <option value="Tiền"> Tiền </option>
 
                 </select>
             </div>

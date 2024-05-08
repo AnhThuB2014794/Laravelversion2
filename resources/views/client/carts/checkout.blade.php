@@ -124,7 +124,7 @@
     <div class="form-group">
         <div class="form-check">
             <input type="radio" class="form-check-input" value="Tiền mặt" name="payment">
-            <label class="form-check-label">Thanh toán COD</label>
+            <label class="form-check-label">Thanh toán khi nhận hàng</label>
         </div>
 
 

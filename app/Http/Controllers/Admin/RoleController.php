@@ -37,9 +37,9 @@ class RoleController extends Controller
         $dataCreate = $request->all();
         $dataCreate['guard_name'] = 'web';
         $role = Role::create($dataCreate);
-
-        $role->permissions()->attach($dataCreate['permission_ids']);
-
+        if (!empty($dataCreate['permission_ids'])) {
+            $role->permissions()->attach($dataCreate['permission_ids']);
+        }
         return to_route('roles.index')->with(['message' => 'Tạo mới thành công']);
     }
 

@@ -76,10 +76,16 @@ class DashboardController extends Controller
             ->groupBy('date')
             ->orderBy('date')
             ->get();
-        $totalRevenue = DB::table('orders')
-            ->where('status', 'Xác nhận')
-            ->whereBetween('created_at', [$startDate, $endDate])
-            ->sum('total');
+        $totalRevenue = 
+        // DB::table('orders')
+        //     ->where('status', 'Xác nhận')
+        //     ->whereBetween('created_at', [$startDate, $endDate])
+        //     ->sum('total');
+        DB::table('product_orders')
+        ->join('orders', 'product_orders.order_id', '=', 'orders.id')
+        ->where('orders.status', 'Xác nhận')
+        ->whereMonth('orders.created_at', $selectedMonth)
+        ->sum(DB::raw('product_orders.product_quantity * product_orders.product_price'));
         $totalOrder = DB::table('orders')
         ->where('status', 'Xác nhận')
             ->whereBetween('created_at', [$startDate, $endDate])
